@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      // Función para manejar el evento beforeunload
+      function handleBeforeUnload(event) {
+        // Borrar el indicador isLoggedIn del almacenamiento local
+        localStorage.removeItem("isLoggedIn");
+      }
+
+      // Agregar el listener para el evento beforeunload
+      window.addEventListener("beforeunload", handleBeforeUnload);
+    </script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario de Revision Vehicular</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fjalla+One|Noto+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Estilos adicionales -->
+      <style>
+      /* Estilos específicos para pantallas pequeñas */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 200px; /* Ajusta el ancho del menú lateral */
+            }
+            .menu-toggle {
+                display: block; /* Muestra el botón de menú en pantallas pequeñas */
+            }
+            .navbar {
+                padding: 10px; /* Agrega espacio alrededor de la barra de navegación */
+            }
+            /* Agrega más estilos específicos para pantallas pequeñas si es necesario */
+        }
+      body {
+        font-family: "Noto Sans", sans-serif;
+        
+      }
+      .container {
+        max-width: 600px;
+      }
+      .btn-generar-pdf {
+        margin-top: 10px;
+      }
+    </style>
+
+    <script>
+      function generarPDF() {
+        // Obtener los valores de los campos del formulario
+        var kilometraje = document.getElementById("kilometraje").value;
+        var fecha = document.getElementById("fecha").value;
+        var mantenimiento = document.getElementById("mantenimiento").value;
+        var repuestos = document.getElementById("repuestos").value;
+        var lugarReparacion = document.getElementById("lugar-reparacion").value;
+        var costo = document.getElementById("costo").value;
+        var numeroFactura = document.getElementById("numero-factura").value;
+
+        // Crear un nuevo objeto de documento PDF
+        var doc = new jsPDF();
+
+        // Agregar contenido al PDF
+        doc.text("Detalles de Mantenimiento", 10, 10);
+        doc.text("Kilometraje: " + kilometraje, 10, 20);
+        doc.text("Fecha: " + fecha, 10, 30);
+        doc.text("Mantenimiento Realizado: " + mantenimiento, 10, 40);
+        doc.text("Repuestos: " + repuestos, 10, 50);
+        doc.text("Lugar de Reparación: " + lugarReparacion, 10, 60);
+        doc.text("Costo: " + costo, 10, 70);
+        doc.text("Número de Factura: " + numeroFactura, 10, 80);
+
+        // Guardar el documento PDF
+        doc.save("formulario_mantenimiento.pdf");
+      }
+    </script>
+
+  </head>
+  <body>
+    <!--   <script>
+        // Verificar si el usuario ha iniciado sesión
+        var isLoggedIn = localStorage.getItem("isLoggedIn");
+        if (!isLoggedIn) {
+            // Si no ha iniciado sesión, redirigir a usuario.html
+            window.location.href = "usuario.html";
+        }
+    </script>---------->
+    <nav class="navbar bg-info text-dark bg-opacity-25" data-bs-theme="light">
+      <div class="container mt-5">
+        <h2 class="text-center">Formulario de Revision vehicular</h2>
+        <form id="formulario-mantenimiento" action="#" method="post">
+          <div class="mb-3">
+            <label for="kilometraje" class="form-label">Kilometraje:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="kilometraje"
+              name="kilometraje"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha De Inspección:</label>
+            <input type="date" class="form-control" id="fecha" required />
+          </div>
+          <div class="mb-3">
+            <label for="mantenimiento" class="form-label"
+              >Nombre Completo:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="Nombre completo"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="mantenimiento" class="form-label"
+              >Balas De Oxigeno (Serial):</label
+            >
+            <input type="text" class="form-control" id="Balas" required />
+          </div>
+          <div class="mb-3">
+            <label for="repuestos" class="form-label"
+              >Documento De Identidad:</label
+            >
+            <input type="text" class="form-control" id="repuestos" required />
+          </div>
+          <div class="mb-3">
+            <label for="lugar-reparacion" class="form-label">Cargo:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="lugar-reparacion"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="costo" class="form-label">Movil:</label>
+            <input type="text" class="form-control" id="costo" required />
+          </div>
+          <div class="mb-3">
+            <label for="numero-factura" class="form-label"
+              >Kilometraje Actual:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="numero-factura"
+              required
+            />
+          </div>
+          <!-- ESTADO DE PRESENTACION------------------------------------------------------------>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            id="mostrarFormulario"
+          >
+            Estado De Presentación
+          </button>
+
+          <div id="formulario" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label">Aseo Interno:</label>
+              <select class="form-select" aria-label="Estado de Aseo Interno">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Aseo Externo:</label>
+              <select class="form-select" aria-label="Estado de Aseo Externo">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Latas:</label>
+              <select class="form-select" aria-label="Estado de Latas">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Pintura:</label>
+              <select class="form-select" aria-label="Estado de Pintura">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+                      document
+                        .getElementById("mostrarFormulario")
+                        .addEventListener("click", function () {
+                          var formulario = document.getElementById("formulario");
+                          formulario.style.display =
+                            formulario.style.display === "block" ? "none" : "block";
+                        });
+                    </script
+
+            <!-- ESTADO DE COMODIDAD--------------------------------------------------------->
+                    <button type="button" class="btn btn-outline-success" id="mostrarFormulario2">
+                      Estado de Comodidad
+                    </button>
+
+                    <div id="formulario2" style="display: none">
+                      <div class="input-group mb-3">
+                        <label class="form-check-label">Silleteria(Anclaje,Cojineria):</label>
+                        <select class="form-select" aria-label="Silleteria(Anclaje,Cojineria)">
+                          <option selected>Selecciona una opción</option>
+                          <option value="bueno">Bueno</option>
+                          <option value="regular">Regular</option>
+                          <option value="malo">Malo</option>
+                        </select>
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <label class="form-check-label">Encendedor:</label>
+                        <select class="form-select" aria-label="Encendedor">
+                          <option selected>Selecciona una opción</option>
+                          <option value="bueno">Bueno</option>
+                          <option value="regular">Regular</option>
+                          <option value="malo">Malo</option>
+                        </select>
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <label class="form-check-label">Luces Interiores:</label>
+                        <select class="form-select" aria-label="Luces Interiores">
+                          <option selected>Selecciona una opción</option>
+                          <option value="bueno">Bueno</option>
+                          <option value="regular">Regular</option>
+                          <option value="malo">Malo</option>
+                        </select>
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <label class="form-check-label">Tapetes:</label>
+                        <select class="form-select" aria-label="Tapetes">
+                          <option selected>Selecciona una opción</option>
+                          <option value="bueno">Bueno</option>
+                          <option value="regular">Regular</option>
+                          <option value="malo">Malo</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <script>
+                      document
+                        .getElementById("mostrarFormulario2")
+                        .addEventListener("click", function () {
+                          var formulario = document.getElementById("formulario2");
+                          formulario.style.display =
+                            formulario.style.display === "block" ? "none" : "block";
+                        });
+          </script>
+          <!-- NIVELES DE LIQUIDO ------------------------------------------------------------->
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            id="mostrarFormulario3"
+          >
+            Niveles De Liquido
+          </button>
+
+          <div id="formulario3" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label">Nivel De Aceite Del Motor:</label>
+              <select
+                class="form-select"
+                aria-label="Nivel De Aceite Del Motor"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Nivel De Liquido De Frenos:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Nivel De Liquido De Frenos"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Nivel De Agua Del Radiador:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Nivel De Liquido De Frenos"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Nivel De Agua De La Bateria:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Nivel De Agua De La Bateria"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Nivel De Aceite Hidraulico:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Nivel De Aceite Hidraulico"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario3")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario3");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+          <!-- PERDIDAD DE LIQUIDO ---------------------------------------------------------------->
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            id="mostrarFormulario4"
+          >
+            Perdida De Liquido
+          </button>
+
+          <div id="formulario4" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label">Fugas De ACPM O Gasolina:</label>
+              <select class="form-select" aria-label="Fugas De ACPM O Gasolina">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Fugas De Agua:</label>
+              <select class="form-select" aria-label="Fugas De Agua">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Fugas De Aceite De Transmisión:</label
+              >
+              <select class="form-select" aria-label="Estado de Latas">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Fuga De Aceite De Caja:</label>
+              <select class="form-select" aria-label="Fuga De Aceite De Caja">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Fuga De Liquido De Frenos:</label>
+              <select
+                class="form-select"
+                aria-label="Fuga De Liquido De Frenos"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario4")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario4");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+
+          <!-- TABLERO DE CONTROL ---------------------------------------------------------------->
+
+          <button
+            type="button"
+            class="btn btn-outline-warning"
+            id="mostrarFormulario5"
+          >
+            Tablero De Control
+          </button>
+
+          <div id="formulario5" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label">Instrumentos:</label>
+              <select class="form-select" aria-label="Instrumentos">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Luces De Tablero:</label>
+              <select class="form-select" aria-label="Estado de Aseo Externo">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Nivel De Combustible:</label>
+              <select class="form-select" aria-label="Nivel De Combustible">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Pito:</label>
+              <select class="form-select" aria-label="Pito">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Odometro/Tacometro:</label>
+              <select class="form-select" aria-label="Odometro/Tacometro">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Velocimetro:</label>
+              <select class="form-select" aria-label="Velocimetro">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Indicador De Aceite:</label>
+              <select class="form-select" aria-label="Indicador De Aceite">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Indicador De Temperatura:</label>
+              <select class="form-select" aria-label="Indicador De Temperatura">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Sirena:</label>
+              <select class="form-select" aria-label="Sirena">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario5")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario5");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+          <!-- SEGURIDAD PASIVA ------------------------------------------------------------------->
+          <button
+            type="button"
+            class="btn btn-outline-info"
+            id="mostrarFormulario6"
+          >
+            Seguridad Pasiva
+          </button>
+
+          <div id="formulario6" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label">Cinturones De Seguridad:</label>
+              <select class="form-select" aria-label="Cinturones De Seguridad">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Airbags:</label>
+              <select class="form-select" aria-label="Airbags">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Chasis Y Carroceria:</label>
+              <select class="form-select" aria-label="Chasis Y Carroceria">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Cristales(Vidrios):</label>
+              <select class="form-select" aria-label="Cristales(Vidrios)">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Apoyacabezas:</label>
+              <select class="form-select" aria-label="Apoyacabezas">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Estado De Espejos:</label>
+              <select class="form-select" aria-label="Estado De Espejos">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Espejo Lateral Derecho:</label>
+              <select class="form-select" aria-label="Espejo Lateral Derecho">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Espejo Lateral Izquierdo:</label>
+              <select class="form-select" aria-label="Espejo Lateral Izquierdo">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Espejo Retrovisor:</label>
+              <select class="form-select" aria-label="Espejo Retrovisor">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Farolas:</label>
+              <select class="form-select" aria-label="Farolas">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Manijas Exteriores:</label>
+              <select class="form-select" aria-label="Manijas Exteriores">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Parachoques Delantero:</label>
+              <select class="form-select" aria-label="Parachoques Delantero">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Parachoques Trasero:</label>
+              <select class="form-select" aria-label="Parachoques Trasero">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario6")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario6");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+
+          <!-- SEGURIDAD ACTIVA --------------------------------------------------------------------------------------->
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            id="mostrarFormulario7"
+          >
+            Seguridad Activa
+          </button>
+
+          <div id="formulario7" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label">Estado De Dirección:</label>
+              <select class="form-select" aria-label="Estado De Dirección">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Estado De Supensión Delantera:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Estado De Supensión Delantera"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Amortiguadores Delanteros:</label>
+              <select
+                class="form-select"
+                aria-label="Amortiguadores Delanteros"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Estado De Suspensión Trasera:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Estado De Suspensión Trasera"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Amortiguadores Traseros:</label>
+              <select class="form-select" aria-label="Amortiguadores Traseros">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Lavaparabrisas:</label>
+              <select class="form-select" aria-label="Lavaparabrisas">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Vidrio Frontal:</label>
+              <select class="form-select" aria-label="Vidrio Frontal">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Limpiabrisas Derecho:</label>
+              <select class="form-select" aria-label="Limpiabrisas Derecho">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Limpiabrisas Izquierdo:</label>
+              <select class="form-select" aria-label="Limpiabrisas Izquierdo">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Aseo Del Area Del Motor:</label>
+              <select class="form-select" aria-label="Aseo Del Area Del Motor">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Bornes De Bateria:</label>
+              <select class="form-select" aria-label="Bornes De Bateria">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Ventilador:</label>
+              <select class="form-select" aria-label="Ventilador">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario7")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario7");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+          <!--ESTADO DE LUCES-------------------------------------------------------------->
+
+          <button
+            type="button"
+            class="btn btn-outline-dark"
+            id="mostrarFormulario8"
+          >
+            Estado De Luces
+          </button>
+
+          <div id="formulario8" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label">Luces Altas:</label>
+              <select class="form-select" aria-label="Luces Altas">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Luces Medias:</label>
+              <select class="form-select" aria-label="Luces Medias">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Luces Bajas:</label>
+              <select class="form-select" aria-label="Luces Bajas">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Direccional Izquierdo Delantero:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Direccional Izquierdo Delantero"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Direccional Derecho Delantero:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Direccional Derecho Delantero"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Direccional Izquierdo Trasero:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Direccional Izquierdo Trasero"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Direccional Derecho Trasero:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Direccional Derecho Trasero"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Luces De Parqueo:</label>
+              <select class="form-select" aria-label="Luces De Parqueo">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Luz Freno:</label>
+              <select class="form-select" aria-label="Luz Freno">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Luz Reversa:</label>
+              <select class="form-select" aria-label="Luz Reversa">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Luz Placa:</label>
+              <select class="form-select" aria-label="Luz Placa">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Exploradoras:</label>
+              <select class="form-select" aria-label="Exploradoras">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Luz Baliza:</label>
+              <select class="form-select" aria-label="Luz Baliza">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario8")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario8");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+          <!-- ESTADO DE LLANTAS---------------------------------------------------------->
+
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            id="mostrarFormulario9"
+          >
+            Estado De Llantas
+          </button>
+
+          <div id="formulario9" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label">Delantera Izquierda:</label>
+              <select class="form-select" aria-label="Delantera Izquierda">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Delantera Derecha:</label>
+              <select class="form-select" aria-label="Delantera Derecha">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Trasera Izquierda:</label>
+              <select class="form-select" aria-label="Trasera Izquierda">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Trasera Derecha:</label>
+              <select class="form-select" aria-label="Trasera Derecha">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Repuesto:</label>
+              <select class="form-select" aria-label="Repuesto">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Presión Del Aire De Las Llantas:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Presión Del Aire De Las Llantas"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Rines:</label>
+              <select class="form-select" aria-label="Rines">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario9")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario9");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+          <!---Frenos------------------------------------------------------------------------->
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            id="mostrarFormulario10"
+          >
+            Frenos
+          </button>
+
+          <div id="formulario10" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label">Estado De Los Frenos:</label>
+              <select class="form-select" aria-label="Estado de Los Frenos">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Freno De Mano:</label>
+              <select class="form-select" aria-label="Freno De Mano">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario10")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario10");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+          <!-- EQUIPO DE CARRETERA---------------------------------------------------------->
+          <button
+            type="button"
+            class="btn btn-outline-info"
+            id="mostrarFormulario11"
+          >
+            Equipo De Carretera
+          </button>
+
+          <div id="formulario11" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Gato Con Capacidad De Levantar El Vehiculo:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Gato Con Capacidad De Levantar El Vehiculo"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Chaleco Reflectivo:</label>
+              <select class="form-select" aria-label="Chaleco Reflectivo">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >2 Latas Tacos Para Bloquear El Vehiculo:</label
+              >
+              <select
+                class="form-select"
+                aria-label="2 Latas Tacos Para Bloquear El Vehiculo"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >2 Conos Plasticos Reflectivos:</label
+              >
+              <select
+                class="form-select"
+                aria-label="2 Conos Plasticos Reflectivos"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >1 Par De Guantes De Trabajo En Lona:</label
+              >
+              <select
+                class="form-select"
+                aria-label="1 Par De Guantes De Trabajo En Lona"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Cruceta:</label>
+              <select class="form-select" aria-label="Cruceta">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">1 Kit De Cable De Iniciar:</label>
+              <select
+                class="form-select"
+                aria-label="1 Kit De Cable De Iniciar "
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">2 Extintores De Fuego:</label>
+              <select class="form-select" aria-label="2 Extintores De Fuego">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >1 Linterna De Mano Con Pilas:</label
+              >
+              <select
+                class="form-select"
+                aria-label="1 Linterna De Mano Con Pilas"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >1 Linterna Con Adaptador Al Encendedor De Cigarros O Toma
+                Corriente De 12v O 110v:</label
+              >
+              <select
+                class="form-select"
+                aria-label="1 Linterna Con Adaptador Al Encendedor De Cigarros O Toma Corriente De 12v O 110v"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Caja De Fusibles Surtidos:</label>
+              <select
+                class="form-select"
+                aria-label="Caja De Fusibles Surtidos"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Bombillo De Repuesto De Diferentes Filamentos Para Las Luces
+                Laterales:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Bombillo De Repuesto De Diferentes Filamentos Para Las Luces Laterales"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >1 Cuerda Estatica De 30m; Diametro 12.3mm Con Gancho De
+                Atracción:</label
+              >
+              <select
+                class="form-select"
+                aria-label="1 Cuerda Estatica De 30m; Diametro 12.3mm Con Gancho De Atracción"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Kit Inmovilizadores Para Extremidades De Escalerilla
+                Metalico:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Kit Inmovilizadores Para Extremidades De Escalerilla Metalico"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario11")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario11");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+          <!--HERRAMIENTAS ---------------------------------------------------------------------->
+
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            id="mostrarFormulario12"
+          >
+            Herrameintas
+          </button>
+
+          <div id="formulario12" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label">Alicate:</label>
+              <select class="form-select" aria-label="Alicate">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Destornillador Pala (1 Pequeño,1 Grande):</label
+              >
+              <select
+                class="form-select"
+                aria-label="Destornillador Pala (1 Pequeño,1 Grande)"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">1 Llave De Expansión:</label>
+              <select class="form-select" aria-label="1 Llave De Expansión">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Juego De Llaves (1/2) (10-11-12-13-14):</label
+              >
+              <select
+                class="form-select"
+                aria-label="uego De Llaves (1/2) (10-11-12-13-14)"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">1 Martillo:</label>
+              <select class="form-select" aria-label="1 Martillo">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">1 Patecabra:</label>
+              <select class="form-select" aria-label="1 Patecabra">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario12")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario12");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+          <!--DOTACIÓN---------------------------------------------------------------------->
+          <button
+            type="button"
+            class="btn btn-outline-warning"
+            id="mostrarFormulario13"
+          >
+            Dotacíon
+          </button>
+
+          <div id="formulario13" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Cilindro Oxigeno Portatel Con Manometro:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Cilindro Oxigeno Portatel Con Manometro"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Cilindro Oxigeno Central:</label>
+              <select class="form-select" aria-label="Cilindro Oxigeno Central">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >1 Camilla Principal Con Sistema De Anclaje Y Cinturones De
+                Seguridad:</label
+              >
+              <select
+                class="form-select"
+                aria-label="1 Camilla Principal Con Sistema De Anclaje Y Cinturones De Seguridad"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >1 Camilla Tipo Plegable De Lona:</label
+              >
+              <select
+                class="form-select"
+                aria-label="1 Camilla Tipo Plegable De Lona"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >1 Camilla Segundaria Para Inmovilización Espinal Y Correas Para
+                Asegurar El Paciente:</label
+              >
+              <select
+                class="form-select"
+                aria-label="1 Camilla Segundaria Para Inmovilización Espinal Y Correas Para Asegurar El Paciente"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Tabla Espinal Corta O Chaleco De Estracción Vehicular:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Tabla Espinal Corta O Chaleco De Estracción Vehicular"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Silla De Ruedas:</label>
+              <select class="form-select" aria-label="Silla De Ruedas">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Balas De Oxigeno:</label>
+              <select class="form-select" aria-label="Balas De Oxigeno">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Tabla Rigida:</label>
+              <select class="form-select" aria-label="Tabla Rigida">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario13")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario13");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+          <!-- Limpieza Y Desinfección Covid-19------------------------------------------------------------->
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            id="mostrarFormulario14"
+          >
+            Limpieza Y Desinfección Covid-19
+          </button>
+
+          <div id="formulario14" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >La Movil Se Encuentra Optimizada En Limpieza Y Desinfección Por
+                El Covid-19:</label
+              >
+              <select
+                class="form-select"
+                aria-label="La Movil Se Encuentra Optimizada En Limpieza Y Desinfección Por El Covid-19"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario14")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario14");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+
+          <button
+            type="button"
+            class="btn btn-outline-dark"
+            id="mostrarFormulario15"
+          >
+            Otros
+          </button>
+
+          <div id="formulario15" style="display: none">
+            <div class="input-group mb-3">
+              <label class="form-check-label">Instalaciones Electricas:</label>
+              <select class="form-select" aria-label="Instalaciones Electricas">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Clutch:</label>
+              <select class="form-select" aria-label="Clutch">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Exosto:</label>
+              <select class="form-select" aria-label="Exosto">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Alarma Sonora De Reversa:</label>
+              <select class="form-select" aria-label="Alarma Sonora De Reversa">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Tapa De Aceite:</label>
+              <select class="form-select" aria-label="Tapa De Aceite">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Salto De Cambios:</label>
+              <select class="form-select" aria-label="Salto De Cambios">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Cambios Suaves:</label>
+              <select class="form-select" aria-label="Cambios Suaves">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Guaya Del Acelerador:</label>
+              <select class="form-select" aria-label="Guaya Del Acelerador">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Sistema De Embrague:</label>
+              <select class="form-select" aria-label="Sistema De Embrague">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label">Encendido:</label>
+              <select class="form-select" aria-label="Encendido">
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="form-check-label"
+                >Tapa De Tanque De Gasolina O ACPM:</label
+              >
+              <select
+                class="form-select"
+                aria-label="Tapa De Tanque De Gasolina O ACPM"
+              >
+                <option selected>Selecciona una opción</option>
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            document
+              .getElementById("mostrarFormulario15")
+              .addEventListener("click", function () {
+                var formulario = document.getElementById("formulario15");
+                formulario.style.display =
+                  formulario.style.display === "block" ? "none" : "block";
+              });
+          </script>
+          <div class="mb-3">
+            <label for="Observaciones O Sugerencias" class="form-label"
+              >Observaciones O Sugerencias:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="Observaciones O Sugerencias"
+              name="Observaciones O Sugerencias"
+              required
+            />
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary btn-generar-pdf"
+            onclick="window.location.href='index.html'"
+          >
+            Generar PDF
+          </button>
+        </form>
+      </div>
+    </nav>
+    
+  </body>
+</html>

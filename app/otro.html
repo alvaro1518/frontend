@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html translate="no">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="keywords"
+      content="Globho,Software Medico,Historia Clinica,Pacientes,Rips,Agenda Medica,PyP,Resolucion 4505,Resolucion 1995,Resolucion 3374,Glovo,Globo"
+    />
+    <title>Globho 1.0</title>
+    <link rel="icon" href="/favicon.png" />
+
+    <link
+      href="/Content/css?v=4c0NqpqFercLfzyWDY640QR0XPVVo-EFI097OVfyb741"
+      rel="stylesheet"
+    />
+
+    <link
+      href="/Content/themes/base/css?v=8bPQUISQtvPrYl8Sw260WBEu4sw84-lHWx9XB9Wf8gc1"
+      rel="stylesheet"
+    />
+
+    <script src="/bundles/modernizr?v=inCVuEFe6J4Q07A0AcRsbJic_UE5MwpRMNGcOtk94TE1"></script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle"
+            data-toggle="collapse"
+            data-target=".navbar-ex1-collapse"
+          >
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <a class="navbar-brand" href="/"
+            ><img src="/Images/logo_Web.svg" />
+          </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav side-nav">
+            <li style="padding: 10px 5px 3px 5px">
+              <form action="/Paciente" method="get">
+                <div class="input-group input-group-sm">
+                  <input
+                    class="form-control"
+                    id="SearchText"
+                    name="SearchText"
+                    placeholder="Paciente"
+                    type="text"
+                    value=""
+                  />
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">
+                      <span
+                        class="glyphicon glyphicon-search"
+                        aria-hidden="true"
+                      ></span>
+                    </button>
+                  </span>
+                </div>
+              </form>
+            </li>
+            <li class="idmenuconfiguracion">
+              <a href="/Empresa"
+                ><i
+                  class="bi-gear-fill"
+                  style="font-size: 1.5rem; color: #ffcc80"
+                ></i>
+                Configuración</a
+              >
+            </li>
+            <li class="idmenuprofesional">
+              <a href="/Account/RegisterTeam"
+                ><i
+                  class="bi-people-fill"
+                  style="font-size: 1.5rem; color: #ffb74d"
+                ></i>
+                Profesionales</a
+              >
+            </li>
+            <li class="idmenucatalogo">
+              <a href="/Catalogo"
+                ><i
+                  class="bi-tags-fill"
+                  style="font-size: 1.5rem; color: #aed581"
+                ></i>
+                Catalogo</a
+              >
+            </li>
+            <li class="idmenupaciente">
+              <a href="/Paciente"
+                ><i
+                  class="bi-person-circle"
+                  style="font-size: 1.5rem; color: #64b5f6"
+                ></i>
+                Pacientes</a
+              >
+            </li>
+            <li class="idmenuagenda">
+              <a href="/Calendario/List"
+                ><i
+                  class="bi-calendar-event-fill"
+                  style="font-size: 1.5rem; color: #e57373"
+                ></i>
+                Agenda</a
+              >
+            </li>
+            <li class="idmenulaboratorio">
+              <a href="/Laboratorio"
+                ><i
+                  class="bi-droplet-half"
+                  style="font-size: 1.5rem; color: #ba68c8"
+                ></i>
+                Laboratorio</a
+              >
+            </li>
+            <li class="idmenuimagenologia">
+              <a href="/Imagenologia"
+                ><i
+                  class="bi-file-fill"
+                  style="font-size: 1.5rem; color: #ba68c8"
+                ></i>
+                Imagenología</a
+              >
+            </li>
+            <li class="idmenuadministrativo">
+              <a href="/Inventario"
+                ><i
+                  class="bi-grid-fill"
+                  style="font-size: 1.5rem; color: #ffd54f"
+                ></i>
+                Administrativo</a
+              >
+            </li>
+            <li class="idmenucontabilidad">
+              <a href="/Contabilidad/Periodo"
+                ><i
+                  class="bi-bookmarks-fill"
+                  style="font-size: 1.5rem; color: #f06292"
+                ></i>
+                Contabilidad</a
+              >
+            </li>
+            <li class="idmenuplano">
+              <a href="/Plano"
+                ><i
+                  class="bi-file-earmark-zip-fill"
+                  style="font-size: 1.5rem; color: #dce775"
+                ></i>
+                Planos</a
+              >
+            </li>
+            <li class="idmenureporte">
+              <a href="/Informe"
+                ><i
+                  class="bi-printer-fill"
+                  style="font-size: 1.5rem; color: #81c784"
+                ></i>
+                Reportes</a
+              >
+            </li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/Account/Login"
+                ><i class="bi-person-fill" style="color: #ffb74d"></i> Iniciar
+                sesión
+              </a>
+            </li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right navbar-user">
+            <li class="idmenupanel">
+              <a href="/"
+                ><i class="bi-display-fill" style="color: #ffb74d"></i> Panel</a
+              >
+            </li>
+            <li>
+              <a href="https://icd.who.int/browse11/l-m/es" target="_blank"
+                ><i class="bi-safe2-fill" style="color: #64b5f6"></i> CIE-11</a
+              >
+            </li>
+            <li class="idmenunota">
+              <a href="/Tarea"
+                ><i
+                  class="bi-check-circle-fill"
+                  style="font-size: 1.5rem; color: #aed581"
+                ></i>
+                Notas/Tareas</a
+              >
+            </li>
+
+            <li class="dropdown user-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                ><i class="bi-chat-left-fill" style="color: #ffb74d"></i>
+                Ayuda<b class="caret"></b
+              ></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="https://globho.com/ayuda/" target="_blank"
+                    ><i
+                      class="bi-journal-bookmark-fill gs-font-l"
+                      style="color: #428bca"
+                    ></i>
+                    Guía Inicio</a
+                  >
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="#"
+                    ><i
+                      class="bi-envelope-check-fill gs-font-l"
+                      style="color: #428bca"
+                    ></i>
+                    soporte@globho.com</a
+                  >
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a
+                    href="https://api.whatsapp.com/send?phone=573142441243"
+                    target="_blank"
+                    ><i
+                      class="bi-whatsapp gs-font-l"
+                      style="color: #25d366"
+                    ></i>
+                    314 244 1243</a
+                  >
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a
+                    href="https://www.instagram.com/globho.api/"
+                    target="_blank"
+                    ><i
+                      class="bi-instagram gs-font-l"
+                      style="color: #e1306c"
+                    ></i>
+                    Globho.Api</a
+                  >
+                </li>
+                <li>
+                  <a href="https://www.facebook.com/GlobhoApi" target="_blank"
+                    ><i
+                      class="bi-facebook gs-font-l"
+                      style="color: #4267b2"
+                    ></i>
+                    GlobhoApi</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.youtube.com/channel/UCdTwmwgVHIi_sFZLjI9wC3Q"
+                    target="_blank"
+                    ><i class="bi-youtube gs-font-l" style="color: #ff0000"></i>
+                    Globho</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.linkedin.com/showcase/globho/"
+                    target="_blank"
+                    ><i
+                      class="bi-linkedin gs-font-l"
+                      style="color: #0e76a8"
+                    ></i>
+                    Globho</a
+                  >
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="https://anydesk.es/" target="_blank"
+                    ><i
+                      class="bi-layers-half gs-font-l"
+                      style="color: #ef443b"
+                    ></i>
+                    AnyDesk Acceso Remoto</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div id="page-wrapper">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h2>Iniciar sesi&#243;n.</h2>
+                <div class="alert alert-success" role="alert">
+                  <p>
+                    <b>Use una cuenta registrada para iniciar sesión.</b>
+                  </p>
+                </div>
+              </div>
+              <div class="panel-body">
+                <section id="loginForm">
+                  <form
+                    action="/Account/Login"
+                    class="form-horizontal"
+                    method="post"
+                    role="form"
+                  >
+                    <input
+                      name="__RequestVerificationToken"
+                      type="hidden"
+                      value="Vxov93m8ik3vuwbhoq5BgZGhMPF2H0t8RwryH6IZoG8kFLdvj56JIbbT6YFFNKI_AaQy0b7EZ37venOQw9frTL6BUd_x9efqxmrYlTIeJqc1"
+                    />
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="Email"
+                        >Correo electr&#243;nico</label
+                      >
+                      <div class="col-md-8">
+                        <input
+                          class="form-control"
+                          data-val="true"
+                          data-val-email="The Correo electrónico field is not a valid e-mail address."
+                          data-val-required="The Correo electrónico field is required."
+                          id="Email"
+                          name="Email"
+                          type="text"
+                          value=""
+                        />
+                        <span
+                          class="field-validation-valid text-danger"
+                          data-valmsg-for="Email"
+                          data-valmsg-replace="true"
+                        ></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="Password"
+                        >Contrase&#241;a</label
+                      >
+                      <div class="col-md-8">
+                        <div class="input-group">
+                          <input
+                            class="form-control"
+                            data-val="true"
+                            data-val-required="The Contraseña field is required."
+                            id="txtPassword"
+                            name="Password"
+                            type="password"
+                          />
+                          <span class="input-group-btn">
+                            <a
+                              class="btn btn-default"
+                              id="btnPassword"
+                              onclick="showPassword()"
+                              title="Mostrar Contraseña"
+                            >
+                              <span class="text-info">
+                                <i class="iconPassword bi-eye-fill"></i>
+                              </span>
+                            </a>
+                          </span>
+                        </div>
+                        <span
+                          class="field-validation-valid text-danger"
+                          data-valmsg-for="Password"
+                          data-valmsg-replace="true"
+                        ></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-offset-4 col-md-8">
+                        <div class="form-inline">
+                          <input
+                            class="checkbox check-box"
+                            data-val="true"
+                            data-val-required="The ¿Recordar cuenta? field is required."
+                            id="RememberMe"
+                            name="RememberMe"
+                            type="checkbox"
+                            value="true"
+                          /><input
+                            name="RememberMe"
+                            type="hidden"
+                            value="false"
+                          />
+                          <label class="small"
+                            ><label for="RememberMe"
+                              >&#191;Recordar cuenta?</label
+                            ></label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-offset-4 col-md-8">
+                        <input
+                          type="submit"
+                          value="Iniciar sesión"
+                          class="btn btn-primary"
+                        />
+                      </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                      <div class="col-md-12">
+                        <p>
+                          <a href="/Account/ForgotPassword"
+                            >&#191;Ha olvidado su contrase&#241;a?</a
+                          >
+                        </p>
+                      </div>
+                    </div>
+                  </form>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr />
+        <footer>
+          Globho &copy; 2024 |
+          <a href="https://globho.com" target="_blank">www.globho.com</a> |
+          <a href="https://globho.com/terminos-de-uso/" target="_blank"
+            >Terminos del Sevicio</a
+          >
+          |
+          <a href="https://grafosoft.com" target="_blank">www.grafosoft.com</a>
+        </footer>
+      </div>
+    </div>
+    <!-- /#wrapper -->
+
+    <script src="/bundles/jquery?v=HoRQ09kYLXZV2fRPio-4sFwem_LiuM00HkYeh777jks1"></script>
+
+    <script src="/bundles/jquery-ui?v=H50uVeAenUTiJ0immaMNBGAJBv9rOf8h7YG24uoAzBg1"></script>
+
+    <script src="/bundles/bootstrap?v=7k-mK_Lw6GRA4MkvIrgrWipUHc3KUDohIwN2DDpspCI1"></script>
+
+    <script src="/bundles/fileinput?v=Y6_C853CttGCOroJMXaWwYdri4kIYsnP1bg1mlIcDFA1"></script>
+
+    <script src="/bundles/sweetalert?v=NPb20yuJ3sD2-_mJuzLdNnM8Mnt2pk5gDJQ7IIHbBbs1"></script>
+
+    <!-- Office UI Fabric -->
+
+    <script src="/bundles/jqueryval?v=68gUS0MFyH2UgTDYZ8fLvAZ7XhWlGPV6cfRQ-zA1ecI1"></script>
+
+    <script type="text/javascript">
+      //-----Ocultar Menu Vertical---
+      document.getElementsByClassName("nav navbar-nav side-nav")[0].className =
+        "nav navbar-nav side-nav hidden";
+      //-----------------------------------------
+
+      function showPassword() {
+        var tipo = document.getElementById("txtPassword");
+        var btn = document.getElementById("btnPassword");
+        if (tipo.type == "password") {
+          tipo.type = "text";
+          btn.title = "Ocultar Contraseña";
+          document.getElementsByClassName(
+            "iconPassword bi-eye-fill"
+          )[0].className = "iconPassword bi-eye-slash-fill";
+        } else {
+          tipo.type = "password";
+          btn.title = "Mostrar Contraseña";
+          document.getElementsByClassName(
+            "iconPassword bi-eye-slash-fill"
+          )[0].className = "iconPassword bi-eye-fill";
+        }
+      }
+
+      function DoubleClick() {
+        $(document).on("invalid-form.validate", "form", function () {
+          var button = $(this).find('input[type="submit"]');
+          setTimeout(function () {
+            button.removeAttr("disabled");
+          }, 1);
+        });
+        $(document).on("submit", "form", function () {
+          var button = $(this).find('input[type="submit"]');
+          setTimeout(function () {
+            button.attr("disabled", "disabled");
+          }, 0);
+        });
+      }
+    </script>
+
+    <script type="text/javascript">
+      //--------------Validacion de Decimales---------------------------
+      $.validator.methods.number = function (value, element) {
+        value = floatValue(value);
+        return this.optional(element) || !isNaN(value);
+      };
+      $.validator.methods.range = function (value, element, param) {
+        value = floatValue(value);
+        return (
+          this.optional(element) || (value >= param[0] && value <= param[1])
+        );
+      };
+      function floatValue(value) {
+        return parseFloat(value.replace(".", ","));
+      }
+      //-------------------------------------------------
+    </script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <meta charset="UTF-8">
+    <title>Administrador</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+      /* Estilos específicos para pantallas pequeñas */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 200px; /* Ajusta el ancho del menú lateral */
+            }
+            .menu-toggle {
+                display: block; /* Muestra el botón de menú en pantallas pequeñas */
+            }
+            .navbar {
+                padding: 10px; /* Agrega espacio alrededor de la barra de navegación */
+            }
+            /* Agrega más estilos específicos para pantallas pequeñas si es necesario */
+        }
+  </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h2>Administrador</h2>
+        <form id="addUserForm">
+            <div class="mb-3">
+                <label for="newUsername" class="form-label">Nuevo Usuario:</label>
+                <input type="text" id="newUsername" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="newPassword" class="form-label">Nueva Contraseña:</label>
+                <input type="password" id="newPassword" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar Usuario</button>
+        </form>
+        <!-- Botón "Salir" -->
+        <a href="usuario.html" class="btn btn-secondary mt-3">Salir</a>
+    </div>
+
+    <script>
+        document.getElementById("addUserForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+
+            var newUsername = document.getElementById("newUsername").value;
+            var newPassword = document.getElementById("newPassword").value;
+
+            if (newUsername.trim() === '' || newPassword.trim() === '') {
+                alert('Por favor, complete ambos campos.');
+                return;
+            }
+
+            var newUser = {
+                username: newUsername,
+                password: newPassword
+            };
+
+            fetch('/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newUser),
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Usuario agregado correctamente.");
+                    window.location.href = 'usuario.html';
+                } else {
+                    alert("Error al agregar usuario.");
+                }
+            })
+            .catch(error => {
+                console.error('Error al enviar la solicitud:', error);
+                alert("Error al agregar usuario.");
+            });
+        });
+    </script>
+  
+  <script>
+    // Función para manejar el evento beforeunload
+    function handleBeforeUnload(event) {
+        // Borrar el indicador isLoggedIn del almacenamiento local
+        localStorage.removeItem("isLoggedIn");
+    }
+
+    // Agregar el listener para el evento beforeunload
+    window.addEventListener("beforeunload", handleBeforeUnload);
+</script>
+</body>
+</html>

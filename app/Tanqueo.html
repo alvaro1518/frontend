@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<script>
+      // Función para manejar el evento beforeunload
+      function handleBeforeUnload(event) {
+        // Borrar el indicador isLoggedIn del almacenamiento local
+        localStorage.removeItem("isLoggedIn");
+      }
+
+      // Agregar el listener para el evento beforeunload
+      window.addEventListener("beforeunload", handleBeforeUnload);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.es.min.js"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario de Tanqueo</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fjalla+One|Noto+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Estilos adicionales -->
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+      }
+      .container {
+        max-width: 600px;
+      }
+      .btn-generar-pdf {
+        margin-top: 10px;
+      }
+    </style>
+    <!-- Biblioteca jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+
+    <script>
+      function generarPDF() {
+        // Obtener los valores de los campos del formulario
+        var kilometraje = document.getElementById("kilometraje").value;
+        var fecha = document.getElementById("fecha").value;
+        var mantenimiento = document.getElementById("mantenimiento").value;
+        var repuestos = document.getElementById("repuestos").value;
+        var lugarReparacion = document.getElementById("lugar-reparacion").value;
+        var costo = document.getElementById("costo").value;
+        var numeroFactura = document.getElementById("numero-factura").value;
+
+        // Crear un nuevo objeto de documento PDF
+        var doc = new jsPDF();
+
+        // Agregar contenido al PDF
+        doc.text("Detalles de Mantenimiento", 10, 10);
+        doc.text("Kilometraje: " + kilometraje, 10, 20);
+        doc.text("Fecha: " + fecha, 10, 30);
+        doc.text("Mantenimiento Realizado: " + mantenimiento, 10, 40);
+        doc.text("Repuestos: " + repuestos, 10, 50);
+        doc.text("Lugar de Reparación: " + lugarReparacion, 10, 60);
+        doc.text("Costo: " + costo, 10, 70);
+        doc.text("Número de Factura: " + numeroFactura, 10, 80);
+
+        // Guardar el documento PDF
+        doc.save("formulario_mantenimiento.pdf");
+      }
+    </script>
+  </head>
+  <body>
+  <!--  <script>
+      // Verificar si el usuario ha iniciado sesión
+      var isLoggedIn = localStorage.getItem("isLoggedIn");
+
+      // Si el usuario no ha iniciado sesión, redirigirlo a la página de inicio de sesión
+      if (!isLoggedIn) {
+        window.location.href = "usuario.html";
+      }
+    </script>------------------>
+    <nav
+      class="navbar bg-secondary text-dark bg-opacity-25"
+      data-bs-theme="light"
+    >
+      <div class="container mt-5">
+        <h2 class="text-center">Formulario de Mantenimiento</h2>
+        <form id="formulario-mantenimiento" action="#" method="post">
+          <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha:</label>
+            <input type="date" class="form-control" id="fecha" required />
+          </div>
+          <div class="mb-3">
+            <label for="Hora" class="form-label">Hora:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="Hora"
+              name="Hora"
+              required
+            />
+          </div>
+          <div id="formulario">
+            <div class="input-group mb-3">
+              <label class="form-check-label"></label>
+              <select class="form-select" aria-label="Estado de Aseo Interno">
+                <option value="bueno">Movil 1</option>
+                <option value="bueno">Movil 2</option>
+                <option value="bueno">Movil 3</option>
+                <option value="bueno">Movil 4</option>
+                <option value="bueno">Movil 5</option>
+                <option value="bueno">Movil 6</option>
+                <option value="bueno">Movil 7</option>
+                <option value="bueno">Movil 8</option>
+                <option value="bueno">Movil 9</option>
+              </select>
+            </div>
+          </div>
+
+          <script>
+            // Muestra el formulario automáticamente al cargar la página
+            window.onload = function () {
+              var formulario = document.getElementById("formulario");
+              formulario.style.display = "block";
+            };
+          </script>
+          <select
+            class="form-select"
+            aria-label="Nombres Apellidos Conductor"
+            onchange="checkOtros(this)"
+          >
+            <option value="bueno">EDUARDO PAEZ RODRIGUEZ</option>
+            <option value="bueno">YESID GALVIS URIBE</option>
+            <option value="bueno">JIMMY RODRIGUEZ RIVERA</option>
+            <option value="bueno">JHON FREDDY SOLANO</option>
+            <option value="bueno">NORBEY JESUS BERBESI</option>
+            <option value="bueno">HUMBERTO GARCIA GUERRERO</option>
+            <option value="bueno">CARLOS BENITES</option>
+            <option value="bueno">HECTOR MARINEZ</option>
+            <option value="bueno">MARIO PEÑA</option>
+            <option value="bueno">SNEIDER ALIRIO CALDERON</option>
+            <option value="bueno">DAVID INFANTE</option>
+            <option value="bueno">HECTOR CARNDENAS</option>
+            <option value="bueno">WILSON DIAZ</option>
+            <option value="otros">Otros:</option>
+          </select>
+
+          <div id="otrosInput" style="display: none">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Ingrese otro nombre"
+              aria-label="Otro Nombre"
+            />
+          </div>
+
+          <script>
+            function checkOtros(select) {
+              var otrosInput = document.getElementById("otrosInput");
+              if (select.value === "otros") {
+                otrosInput.style.display = "block";
+              } else {
+                otrosInput.style.display = "none";
+              }
+            }
+          </script>
+
+          <div class="mb-3">
+            <label for="Orden De Tanque" class="form-label"
+              >Orden De Tanque:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="Orden De Tanque"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Kilometraje" class="form-label">Kilometraje:</label>
+            <input type="text" class="form-control" id="Kilometraje" required />
+          </div>
+          <div class="mb-3">
+            <label for="Remision Numero-Bomba Servicio" class="form-label"
+              >Remision Numero-Bomba Servicio:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="Remision Numero-Bomba Servicio"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="adjuntarImagen" class="form-label"
+              >Adjuntar imagen de Firma Y Registro De Remisión:</label
+            >
+            <input
+              type="file"
+              class="form-control"
+              id="adjuntarImagen"
+              accept="image/*"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="adjuntarImagen2" class="form-label"
+              >Adjuntar imagen de Registro De Kilometraje:</label
+            >
+            <input
+              type="file"
+              class="form-control"
+              id="adjuntarImagen2"
+              accept="image/*"
+              required
+            />
+          </div>
+          <script>
+            // Función para generar el PDF
+            function generarPDF() {
+              // Crear un nuevo objeto jsPDF
+              var doc = new jsPDF();
+
+              // Agregar contenido al PDF
+              doc.text(
+                20,
+                20,
+                "Este es un PDF generado dinámicamente con jsPDF."
+              );
+
+              // Guardar el PDF
+              doc.save("documento.pdf");
+            }
+          </script>
+
+          <button
+            type="button"
+            class="btn btn-primary btn-generar-pdf"
+            onclick="window.location.href='index.html'"
+          >
+            Generar PDF
+          </button>
+          <!--<button
+          type="button"
+          class="btn btn-primary btn-generar-pdf"
+          onclick="generarPDF()"
+        >
+          generar PDF------------------------------------------------->
+        </form>
+      </div>
+    </nav>
+  </body>
+</html>

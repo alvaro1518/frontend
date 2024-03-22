@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Umedica</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fjalla+One|Noto+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <style>
+      /* Estilos específicos para pantallas pequeñas */
+      @media screen and (max-width: 768px) {
+        .sidebar {
+          width: 200px; /* Ajusta el ancho del menú lateral */
+        }
+        .menu-toggle {
+          display: block; /* Muestra el botón de menú en pantallas pequeñas */
+        }
+        .navbar {
+          padding: 10px; /* Agrega espacio alrededor de la barra de navegación */
+        }
+        /* Agrega más estilos específicos para pantallas pequeñas si es necesario */
+      }
+
+      body {
+        background-image: url("https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/26800.jpg?v=1709855152709");
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin: 0;
+        height: 100vh; /* 100% de la altura de la ventana */
+        width: 100vw; /* 100% del ancho de la ventana */
+      }
+      .container-fluid {
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -5px;
+        margin-left: -5px;
+      }
+      .col {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+        padding-right: 5px; /* Espaciado entre las columnas */
+        padding-left: 5px; /* Espaciado entre las columnas */
+      }
+      /* botones de menu*/
+      .sidebar {
+        padding: 10px;
+        position: fixed;
+        top: 53px;
+        left: 0;
+        height: 100%;
+        width: 250px;
+        background-color: #007bff; /* Fondo semitransparente cambiar color acordatesssssssssss*/
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+        z-index: 1000; /* Asegura que esté sobre el contenido principal */
+        transform: translateX(-250px); /* Ocultar inicialmente */
+        transition: transform 0.3s ease;
+      }
+      .sidebar h7 {
+  font-size: 16px; /* Tamaño de fuente del título */
+  margin-bottom: 10px; /* Espacio entre el título y la lista */
+}
+
+      .sidebar.active {
+        transform: translateX(0);
+        /* Mostrar cuando está activo */
+      }
+.sidebar ul {
+  list-style-type: none; /* Eliminar los puntos de la lista */
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 5px; /* Espacio entre elementos de la lista */
+}
+
+      .sidebar ul li a {
+        display: block;
+  padding: 5px;
+        text-decoration: none;
+        color: white;
+        background-color: #007bff; /* Color de fondo */
+        border-radius: 10px; /* Bordes redondeados */
+        transition: background-color 0.3s, transform 0.3s; /* Agrega una transición suave */
+      }
+
+      .sidebar ul li a:hover {
+        background-color: #0056b3; /* Cambia el color de fondo al pasar el cursor */
+        transform: scale(1.05); /* Agranda ligeramente el botón */
+      }
+      /*------------------------------------------------------------------------*/
+      .menu-toggle {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        cursor: pointer;
+        z-index: 1100; /* Asegura que esté sobre el menú lateral */
+      }
+      li a {
+        color: white;
+        transition: color 0.3s; /* Agrega una transición suave para el cambio de color */
+      }
+
+      li a:hover {
+        color: lightgray; /* Cambia el color al pasar el cursor */
+      }
+
+      /* Estilos para el contenedor de la descripción */
+      #ambulance-description-1,
+      #ambulance-description-2,
+      #ambulance-description-3,
+      #ambulance-description-4,
+      #ambulance-description-5,
+      #ambulance-description-6,
+      #ambulance-description-7,
+      #ambulance-description-8,
+      #ambulance-description-9 {
+        display: none;
+        position: fixed;
+
+        left: 50%;
+        transform: translate(-50%, -50%); /* Desplazar hacia abajo 50px */
+        background-color: #f8f9fa;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        width: 1140px; /* Ancho del contenedor */
+        height: 600px; /* Alto del contenedor */
+        text-align: center;
+        margin-left: 125px; /* Desplazar hacia la derecha 120px */
+        margin-top: 50px;
+      }
+
+      #ambulance-description h2 {
+        margin-bottom: 10px;
+        font-size: 20px;
+      }
+
+      #ambulance-description p {
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body style="overflow-y: auto">
+    <!-- BARRA DE NAVEGACION -->
+    <!--  fixed-top--->
+    <nav
+      class="navbar bg-primary text-dark"
+      data-bs-theme="light"
+      style="margin-top: 0"
+    >
+      <div
+        class="container-fluid d-flex justify-content-between align-items-center"
+      >
+        <div class="menu-toggle" id="menu-toggle">
+          <!-- Icono de menú -->
+          <img
+            src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/lista-unscreen.gif?v=1709960271044"
+            alt="LOGO"
+            height="50"
+            style="margin-top: -15px"
+          />
+          <path d="M0 0h24v24H0z" fill="none" />
+          <path
+            d="M4 6h16c.55 0 1 .45 1 1s-.45 1-1 1H4c-.55 0-1-.45-1-1s.45-1 1-1zm0 5h16c.55 0 1 .45 1 1s-.45 1-1 1H4c-.55 0-1-.45-1-1s.45-1 1-1zm0 5h16c.55 0 1 .45 1 1s-.45 1-1 1H4c-.55 0-1-.45-1-1s.45-1 1-1z"
+          />
+        </div>
+
+        <div class="container d-flex flex-row gap-3">
+          <div
+            class="modal fade"
+            id="crearMantenimientoModal"
+            tabindex="-1"
+            aria-labelledby="crearMantenimientoModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="crearMantenimientoModalLabel">
+                    Crear Nuevo Mantenimiento
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <!-- Aquí puedes colocar el formulario para que el usuario ingrese los datos del nuevo mantenimiento -->
+                  <form>
+                    <div class="mb-3">
+                      <label for="nombre" class="form-label">Kilometraje</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        required
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="nombre" class="form-label">Kilometraje</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        required
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="nombre" class="form-label">Kilometraje</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        required
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="nombre" class="form-label">Kilometraje</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        required
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="nombre" class="form-label">Kilometraje</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="descripcion" class="form-label"
+                        >Descripción</label
+                      >
+                      <textarea
+                        class="form-control"
+                        id="descripcion"
+                        rows="3"
+                        required
+                      ></textarea>
+                    </div>
+                    <!-- Agrega más campos según sea necesario -->
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Cerrar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="guardarMantenimiento()"
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="dropdown"
+            style="margin-right: -500px; margin-left: 460px; font-size: 15px"
+          >
+            <button
+              class="btn btn-primary dropdown-toggle btn-no-padding"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Mantenimiento
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#crearMantenimientoModal"
+                  >Crear uno nuevo</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Historial de Mantenimiento</a>
+              </li>
+            </ul>
+          </div>
+
+          <!----------------------------------------------------------------------------------------------->
+
+          <div class="container d-flex flex-row gap-3">
+            <div
+              class="dropdown"
+              style="margin-right: -250px; margin-left: 470px; font-size: 15px"
+            >
+              <button
+                class="btn btn-primary dropdown-toggle btn-no-padding"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Dropdown button
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="container d-flex flex-row gap-3">
+            <div
+              class="dropdown"
+              style="margin-right: -210px; margin-left: 220px; font-size: 15px"
+            >
+              <button
+                class="btn btn-primary dropdown-toggle btn-no-padding"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Dropdown button
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="container d-flex flex-row gap-3">
+            <div
+              class="dropdown"
+              style="margin-right: -150px; margin-left: 170px; font-size: 15px"
+            >
+              <button
+                class="btn btn-primary dropdown-toggle btn-no-padding"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Dropdown button
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="col-auto"
+            style="margin-left: 120px; margin-top: 0px; font-size: 15px"
+          >
+            <a class="btn text-white" href="index.html"> Cerrar sesión </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="sidebar" id="sidebar">
+      <ul>
+        <h7>AMBULANCIAS</h7>
+        <li>
+          <a href="#" onclick="showAmbulanceDescription('1')">AMBULANCIA 1</a>
+        </li>
+        <li>
+          <a href="#" onclick="showAmbulanceDescription('2')">AMBULANCIA 2</a>
+        </li>
+        <li>
+          <a href="#" onclick="showAmbulanceDescription('3')">AMBULANCIA 3</a>
+        </li>
+        <li>
+          <a href="#" onclick="showAmbulanceDescription('4')">AMBULANCIA 4</a>
+        </li>
+        <li>
+          <a href="#" onclick="showAmbulanceDescription('5')">AMBULANCIA 5</a>
+        </li>
+        <li>
+          <a href="#" onclick="showAmbulanceDescription('6')">AMBULANCIA 6</a>
+        </li>
+        <li>
+          <a href="#" onclick="showAmbulanceDescription('7')">AMBULANCIA 7</a>
+        </li>
+        <li>
+          <a href="#" onclick="showAmbulanceDescription('8')">AMBULANCIA 8</a>
+        </li>
+        <li>
+          <a href="#" onclick="showAmbulanceDescription('9')">AMBULANCIA 9</a>
+        </li>
+
+        <!-- Agrega más opciones según sea necesario -->
+      </ul>
+    </div>
+    <div
+      id="ambulance-description-1"
+      class="ambulance-description"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/26800.jpg?v=1709855152709'); /* Ruta de la imagen de fondo */
+        background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el contenedor */
+        background-position: center; /* Centrar la imagen de fondo */
+        padding: 20px;
+      "
+    >
+      <!--<a class="navbar-brand" href="index.html">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/usuario-unscreen.gif?v=1709857128718"
+          alt="LOGO"
+          height="50"
+        />
+      </a>----------------------------------->
+      <div style="display: flex; align-items: center">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/6ea31336-9863-4000-9de5-571a4ddd56eb.image.png?v=1708644400080"
+          alt="Descripción de la imagen"
+          style="
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+            margin-left: 00px;
+            border-radius: 5px;
+          "
+        />
+
+        <h2 style="margin-left: 210px; margin-top: -50px">
+          DATOS DEL VEHÍCULO
+        </h2>
+      </div>
+      <div class="container mt-5" style="position: relative">
+        <a
+          class="dropdown btn btn-primary"
+          href="#"
+          style="position: absolute; bottom: 300px; right: 930px"
+          data-bs-toggle="modal"
+          data-bs-target="#crearMantenimientoModal"
+          >Mantenimiento</a
+        >
+        <a
+          class="dropdown btn btn-primary"
+          href="#"
+          style="position: absolute; bottom: 250px; right: 940px"
+          data-bs-toggle="modal"
+          data-bs-target="#crearMantenimientoModal"
+          >Combustible</a
+        >
+        <a
+          class="dropdown btn btn-primary"
+          href="#"
+          style="position: absolute; bottom: 200px; right: 955px"
+          data-bs-toggle="modal"
+          data-bs-target="#crearMantenimientoModal"
+          >Revisión</a
+        >
+        <button
+          id="editButton"
+          class="btn btn-primary"
+          style="position: absolute; bottom: -30px; right: 70px"
+          onclick="enableEditing()"
+        >
+          Editar
+        </button>
+        <button
+          id="saveButton"
+          class="btn btn-primary"
+          style="position: absolute; bottom: -30px; right: 70px; display: none"
+          onclick="saveChanges()"
+        >
+          Guardar
+        </button>
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <table
+              class="table table-bordered"
+              style="
+                width: 800px;
+                margin-top: -110px;
+                margin-left: 30px;
+                border: 5px solid #007bff;
+                border-radius: 10px;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td
+                    contenteditable="false"
+                    style="font-size: 15px; border-right: none"
+                  >
+                    Clase de Vehículo
+                  </td>
+                  <td
+                    contenteditable="false"
+                    style="font-size: 15px; font-weight: bold"
+                  >
+                    CAMIONETA
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    contenteditable="false"
+                    style="font-size: 15px; border-right: none"
+                  >
+                    Placa
+                  </td>
+                  <td
+                    contenteditable="false"
+                    style="font-size: 15px; font-weight: bold"
+                  >
+                    QHG908
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="false" style="font-size: 15px">Marca</td>
+                  <td
+                    contenteditable="true"
+                    style="font-size: 15px; font-weight: bold"
+                  >
+                    HYUNDAI
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="false" style="font-size: 15px">Línea</td>
+                  <td
+                    contenteditable="true"
+                    style="font-size: 15px; font-weight: bold"
+                  >
+                    STAREX PANEL
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="false" style="font-size: 15px">
+                    Modelo
+                  </td>
+                  <td
+                    contenteditable="true"
+                    style="font-size: 15px; font-weight: bold"
+                  >
+                    2005
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="false" style="font-size: 15px">
+                    Motor N°
+                  </td>
+                  <td
+                    contenteditable="true"
+                    style="font-size: 15px; font-weight: bold"
+                  >
+                    D4BB4045602
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="false" style="font-size: 15px">
+                    Chasis
+                  </td>
+                  <td
+                    contenteditable="true"
+                    style="font-size: 15px; font-weight: bold"
+                  >
+                    KMJWVH7BP5U644125
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="false" style="font-size: 15px">
+                    Capacidad
+                  </td>
+                  <td
+                    contenteditable="true"
+                    style="font-size: 15px; font-weight: bold"
+                  >
+                    2 PASAJEROS
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="false" style="font-size: 15px">
+                    Cilidraje
+                  </td>
+                  <td
+                    contenteditable="true"
+                    style="font-size: 15px; font-weight: bold"
+                  >
+                    2600
+                  </td>
+                </tr>
+                <tr>
+                  <td contenteditable="false" style="font-size: 15px">Color</td>
+                  <td
+                    contenteditable="true"
+                    style="font-size: 15px; font-weight: bold"
+                  >
+                    BLANCO
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function enableEditing() {
+        var cells = document.querySelectorAll(
+          "#ambulance-description-1 table td"
+        );
+        cells.forEach(function (cell) {
+          cell.contentEditable = true;
+        });
+        document.getElementById("editButton").style.display = "none";
+        document.getElementById("saveButton").style.display = "block";
+      }
+
+      function saveChanges() {
+        var cells = document.querySelectorAll(
+          "#ambulance-description-1 table td"
+        );
+        cells.forEach(function (cell) {
+          cell.contentEditable = false;
+        });
+        document.getElementById("editButton").style.display = "block";
+        document.getElementById("saveButton").style.display = "none";
+      }
+    </script>
+    <!-- tabla ambulancia 2------->
+    <div
+      id="ambulance-description-2"
+      class="ambulance-description"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/26800.jpg?v=1709855152709'); /* Ruta de la imagen de fondo */
+        background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el contenedor */
+        background-position: center; /* Centrar la imagen de fondo */
+        padding: 20px;
+      "
+    >
+      <!--<a class="navbar-brand" href="index.html">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/usuario-unscreen.gif?v=1709857128718"
+          alt="LOGO"
+          height="50"
+        />
+      </a>----------------------------------->
+      <div style="display: flex; align-items: center">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/6ea31336-9863-4000-9de5-571a4ddd56eb.image.png?v=1708644400080"
+          alt="Descripción de la imagen"
+          style="
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+            margin-left: 00px;
+            border-radius: 5px;
+          "
+        />
+
+        <h2 style="margin-left: 210px; margin-top: -50px">
+          DATOS DEL VEHÍCULO
+        </h2>
+      </div>
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <table
+              class="table table-bordered; border-right: none;"
+              style="
+                width: 800px;
+                margin-top: -110px;
+                margin-left: 30px;
+                border: 5px solid #007bff;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">
+                    Clase de Vehículo
+                  </td>
+                  <th style="font-size: 15px">CAMIONETA</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">Placa</td>
+                  <th style="font-size: 15px">QHG908</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Marca</td>
+                  <th style="font-size: 15px">HYUNDAI</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Línea</td>
+                  <th style="font-size: 15px">STAREX PANEL</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Modelo</td>
+                  <th style="font-size: 15px">2005</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Motor N°</td>
+                  <th style="font-size: 15px">D4BB4045602</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Chasis</td>
+                  <th style="font-size: 15px">KMJWVH7BP5U644125</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Capacidad</td>
+                  <th style="font-size: 15px">2 PASAJEROS</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Cilidraje</td>
+                  <th style="font-size: 15px">2600</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Color</td>
+                  <th style="font-size: 15px">BLANCO</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Tipo de combustible</td>
+                  <th style="font-size: 15px">DIESEL</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--ambulancia 3-------------->
+    <div
+      id="ambulance-description-3"
+      class="ambulance-description"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/26800.jpg?v=1709855152709'); /* Ruta de la imagen de fondo */
+        background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el contenedor */
+        background-position: center; /* Centrar la imagen de fondo */
+        padding: 20px;
+      "
+    >
+      <!--<a class="navbar-brand" href="index.html">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/usuario-unscreen.gif?v=1709857128718"
+          alt="LOGO"
+          height="50"
+        />
+      </a>----------------------------------->
+      <div style="display: flex; align-items: center">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/6ea31336-9863-4000-9de5-571a4ddd56eb.image.png?v=1708644400080"
+          alt="Descripción de la imagen"
+          style="
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+            margin-left: 00px;
+            border-radius: 5px;
+          "
+        />
+
+        <h2 style="margin-left: 210px; margin-top: -50px">
+          DATOS DEL VEHÍCULO
+        </h2>
+      </div>
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <table
+              class="table table-bordered; border-right: none;"
+              style="
+                width: 800px;
+                margin-top: -110px;
+                margin-left: 30px;
+                border: 5px solid #007bff;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">
+                    Clase de Vehículo
+                  </td>
+                  <th style="font-size: 15px">CAMIONETA</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">Placa</td>
+                  <th style="font-size: 15px">FDU029</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Marca</td>
+                  <th style="font-size: 15px">NISSAN</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Línea</td>
+                  <th style="font-size: 15px">URVAN DX</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Modelo</td>
+                  <th style="font-size: 15px">2009</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Motor N°</td>
+                  <th style="font-size: 15px">Z030183067K</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Chasis</td>
+                  <th style="font-size: 15px">JN1P64E25Z0760102</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Capacidad</td>
+                  <th style="font-size: 15px">2 PASAJEROS</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Cilidraje</td>
+                  <th style="font-size: 15px">3000</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Color</td>
+                  <th style="font-size: 15px">BLANCO</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Tipo de combustible</td>
+                  <th style="font-size: 15px">DIESEL</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AMBULANCIA 4----------------->
+    <div
+      id="ambulance-description-4"
+      class="ambulance-description"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/26800.jpg?v=1709855152709'); /* Ruta de la imagen de fondo */
+        background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el contenedor */
+        background-position: center; /* Centrar la imagen de fondo */
+        padding: 20px;
+      "
+    >
+      <!--<a class="navbar-brand" href="index.html">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/usuario-unscreen.gif?v=1709857128718"
+          alt="LOGO"
+          height="50"
+        />
+      </a>----------------------------------->
+      <div style="display: flex; align-items: center">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/6ea31336-9863-4000-9de5-571a4ddd56eb.image.png?v=1708644400080"
+          alt="Descripción de la imagen"
+          style="
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+            margin-left: 00px;
+            border-radius: 5px;
+          "
+        />
+
+        <h2 style="margin-left: 210px; margin-top: -50px">
+          DATOS DEL VEHÍCULO
+        </h2>
+      </div>
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <table
+              class="table table-bordered; border-right: none;"
+              style="
+                width: 800px;
+                margin-top: -110px;
+                margin-left: 30px;
+                border: 5px solid #007bff;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">
+                    Clase de Vehículo
+                  </td>
+                  <th style="font-size: 15px">CAMIONETA</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">Placa</td>
+                  <th style="font-size: 15px">IGT366</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Marca</td>
+                  <th style="font-size: 15px">MERCEDES BENZ</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Línea</td>
+                  <th style="font-size: 15px">VITO 115 CDI</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Modelo</td>
+                  <th style="font-size: 15px">2015</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Motor N°</td>
+                  <th style="font-size: 15px">65194031989676</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Chasis</td>
+                  <th style="font-size: 15px">WDF639605F3861987</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Capacidad</td>
+                  <th style="font-size: 15px">2 PASAJEROS</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Cilidraje</td>
+                  <th style="font-size: 15px">2143</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Color</td>
+                  <th style="font-size: 15px">BLANCO ARTICO</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Tipo de combustible</td>
+                  <th style="font-size: 15px">DIESEL</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- AMBULANCIA 5------------------->
+    <div
+      id="ambulance-description-5"
+      class="ambulance-description"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/26800.jpg?v=1709855152709'); /* Ruta de la imagen de fondo */
+        background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el contenedor */
+        background-position: center; /* Centrar la imagen de fondo */
+        padding: 20px;
+      "
+    >
+      <!--<a class="navbar-brand" href="index.html">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/usuario-unscreen.gif?v=1709857128718"
+          alt="LOGO"
+          height="50"
+        />
+      </a>----------------------------------->
+      <div style="display: flex; align-items: center">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/6ea31336-9863-4000-9de5-571a4ddd56eb.image.png?v=1708644400080"
+          alt="Descripción de la imagen"
+          style="
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+            margin-left: 00px;
+            border-radius: 5px;
+          "
+        />
+
+        <h2 style="margin-left: 210px; margin-top: -50px">
+          DATOS DEL VEHÍCULO
+        </h2>
+      </div>
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <table
+              class="table table-bordered; border-right: none;"
+              style="
+                width: 800px;
+                margin-top: -110px;
+                margin-left: 30px;
+                border: 5px solid #007bff;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">
+                    Clase de Vehículo
+                  </td>
+                  <th style="font-size: 15px">CAMIONETA</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">Placa</td>
+                  <th style="font-size: 15px">REO666</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Marca</td>
+                  <th style="font-size: 15px">MITSUBISHI</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Línea</td>
+                  <th style="font-size: 15px">L 300 2.0L</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Modelo</td>
+                  <th style="font-size: 15px">2010</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Motor N°</td>
+                  <th style="font-size: 15px">4GB3NX7570</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Chasis</td>
+                  <th style="font-size: 15px">JMYJNP13VAA000291</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Capacidad</td>
+                  <th style="font-size: 15px">2 PASAJEROS</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Cilidraje</td>
+                  <th style="font-size: 15px">1997</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Color</td>
+                  <th style="font-size: 15px">BLANCO</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Tipo de combustible</td>
+                  <th style="font-size: 15px">GASOLINA</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- AMBULANCIA 6------------------------->
+    <div
+      id="ambulance-description-6"
+      class="ambulance-description"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/26800.jpg?v=1709855152709'); /* Ruta de la imagen de fondo */
+        background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el contenedor */
+        background-position: center; /* Centrar la imagen de fondo */
+        padding: 20px;
+      "
+    >
+      <!--<a class="navbar-brand" href="index.html">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/usuario-unscreen.gif?v=1709857128718"
+          alt="LOGO"
+          height="50"
+        />
+      </a>----------------------------------->
+      <div style="display: flex; align-items: center">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/6ea31336-9863-4000-9de5-571a4ddd56eb.image.png?v=1708644400080"
+          alt="Descripción de la imagen"
+          style="
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+            margin-left: 00px;
+            border-radius: 5px;
+          "
+        />
+
+        <h2 style="margin-left: 210px; margin-top: -50px">
+          DATOS DEL VEHÍCULO
+        </h2>
+      </div>
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <table
+              class="table table-bordered; border-right: none;"
+              style="
+                width: 800px;
+                margin-top: -110px;
+                margin-left: 30px;
+                border: 5px solid #007bff;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">
+                    Clase de Vehículo
+                  </td>
+                  <th style="font-size: 15px">CAMIONETA</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">Placa</td>
+                  <th style="font-size: 15px">BYR601</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Marca</td>
+                  <th style="font-size: 15px">MITSUBISHI</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Línea</td>
+                  <th style="font-size: 15px">L300</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Modelo</td>
+                  <th style="font-size: 15px">2007</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Motor N°</td>
+                  <th style="font-size: 15px">4G63MK6370</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Chasis</td>
+                  <th style="font-size: 15px">JMYJNP13V7A000406</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Capacidad</td>
+                  <th style="font-size: 15px">2 PASAJEROS</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Cilidraje</td>
+                  <th style="font-size: 15px">2000</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Color</td>
+                  <th style="font-size: 15px">BLANCO SOLIDO</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Tipo de combustible</td>
+                  <th style="font-size: 15px">GAS Y GASOLINA</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- AMBULANCIA 7----------------------->
+    <div
+      id="ambulance-description-7"
+      class="ambulance-description"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/26800.jpg?v=1709855152709'); /* Ruta de la imagen de fondo */
+        background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el contenedor */
+        background-position: center; /* Centrar la imagen de fondo */
+        padding: 20px;
+      "
+    >
+      <!--<a class="navbar-brand" href="index.html">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/usuario-unscreen.gif?v=1709857128718"
+          alt="LOGO"
+          height="50"
+        />
+      </a>----------------------------------->
+      <div style="display: flex; align-items: center">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/6ea31336-9863-4000-9de5-571a4ddd56eb.image.png?v=1708644400080"
+          alt="Descripción de la imagen"
+          style="
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+            margin-left: 00px;
+            border-radius: 5px;
+          "
+        />
+
+        <h2 style="margin-left: 210px; margin-top: -50px">
+          DATOS DEL VEHÍCULO
+        </h2>
+      </div>
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <table
+              class="table table-bordered; border-right: none;"
+              style="
+                width: 800px;
+                margin-top: -110px;
+                margin-left: 30px;
+                border: 5px solid #007bff;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">
+                    Clase de Vehículo
+                  </td>
+                  <th style="font-size: 15px">CAMIONETA</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">Placa</td>
+                  <th style="font-size: 15px">BYM216</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Marca</td>
+                  <th style="font-size: 15px">MITSUBISHI</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Línea</td>
+                  <th style="font-size: 15px">L300</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Modelo</td>
+                  <th style="font-size: 15px">2007</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Motor N°</td>
+                  <th style="font-size: 15px">4G63MJ4025</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Chasis</td>
+                  <th style="font-size: 15px">JMYJN13V7A000230</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Capacidad</td>
+                  <th style="font-size: 15px">2 PASAJEROS</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Cilidraje</td>
+                  <th style="font-size: 15px">2000</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Color</td>
+                  <th style="font-size: 15px">BLANCO</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Tipo de combustible</td>
+                  <th style="font-size: 15px">GASOLINA</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--AMBULANCIA 8------------------------>
+    <div
+      id="ambulance-description-8"
+      class="ambulance-description"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/26800.jpg?v=1709855152709'); /* Ruta de la imagen de fondo */
+        background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el contenedor */
+        background-position: center; /* Centrar la imagen de fondo */
+        padding: 20px;
+      "
+    >
+      <!--<a class="navbar-brand" href="index.html">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/usuario-unscreen.gif?v=1709857128718"
+          alt="LOGO"
+          height="50"
+        />
+      </a>----------------------------------->
+      <div style="display: flex; align-items: center">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/6ea31336-9863-4000-9de5-571a4ddd56eb.image.png?v=1708644400080"
+          alt="Descripción de la imagen"
+          style="
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+            margin-left: 00px;
+            border-radius: 5px;
+          "
+        />
+
+        <h2 style="margin-left: 210px; margin-top: -50px">
+          DATOS DEL VEHÍCULO
+        </h2>
+      </div>
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <table
+              class="table table-bordered; border-right: none;"
+              style="
+                width: 800px;
+                margin-top: -110px;
+                margin-left: 30px;
+                border: 5px solid #007bff;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">
+                    Clase de Vehículo
+                  </td>
+                  <th style="font-size: 15px">CAMIONETA</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">Placa</td>
+                  <th style="font-size: 15px">QHG908</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Marca</td>
+                  <th style="font-size: 15px">HYUNDAI</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Línea</td>
+                  <th style="font-size: 15px">STAREX PANEL</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Modelo</td>
+                  <th style="font-size: 15px">2005</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Motor N°</td>
+                  <th style="font-size: 15px">D4BB4045602</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Chasis</td>
+                  <th style="font-size: 15px">KMJWVH7BP5U644125</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Capacidad</td>
+                  <th style="font-size: 15px">2 PASAJEROS</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Cilidraje</td>
+                  <th style="font-size: 15px">2600</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Color</td>
+                  <th style="font-size: 15px">BLANCO</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- AMBULANCIA 9----------------------->
+    <div
+      id="ambulance-description-9"
+      class="ambulance-description"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/26800.jpg?v=1709855152709'); /* Ruta de la imagen de fondo */
+        background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el contenedor */
+        background-position: center; /* Centrar la imagen de fondo */
+        padding: 20px;
+      "
+    >
+      <!--<a class="navbar-brand" href="index.html">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/usuario-unscreen.gif?v=1709857128718"
+          alt="LOGO"
+          height="50"
+        />
+      </a>----------------------------------->
+      <div style="display: flex; align-items: center">
+        <img
+          src="https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/6ea31336-9863-4000-9de5-571a4ddd56eb.image.png?v=1708644400080"
+          alt="Descripción de la imagen"
+          style="
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+            margin-left: 00px;
+            border-radius: 5px;
+          "
+        />
+
+        <h2 style="margin-left: 210px; margin-top: -50px">
+          DATOS DEL VEHÍCULO
+        </h2>
+      </div>
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <table
+              class="table table-bordered; border-right: none;"
+              style="
+                width: 800px;
+                margin-top: -110px;
+                margin-left: 30px;
+                border: 5px solid #007bff;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">
+                    Clase de Vehículo
+                  </td>
+                  <th style="font-size: 15px">CAMIONETA</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px; border-right: none">Placa</td>
+                  <th style="font-size: 15px">QHG908</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Marca</td>
+                  <th style="font-size: 15px">HYUNDAI</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Línea</td>
+                  <th style="font-size: 15px">STAREX PANEL</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Modelo</td>
+                  <th style="font-size: 15px">2005</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Motor N°</td>
+                  <th style="font-size: 15px">D4BB4045602</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Chasis</td>
+                  <th style="font-size: 15px">KMJWVH7BP5U644125</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Capacidad</td>
+                  <th style="font-size: 15px">2 PASAJEROS</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Cilidraje</td>
+                  <th style="font-size: 15px">2600</th>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px">Color</td>
+                  <th style="font-size: 15px">BLANCO</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--MENU Y BARRA DE NAVEGACIOPN---->
+
+    <!---script tabla columna--------------------------------->
+    <script>
+      function showAmbulanceDescription(ambulance) {
+        var allDescriptions = document.querySelectorAll(
+          ".ambulance-description"
+        );
+        allDescriptions.forEach(function (description) {
+          description.style.display = "none";
+        });
+
+        var descriptionToShow = document.getElementById(
+          "ambulance-description-" + ambulance
+        );
+        if (descriptionToShow) {
+          descriptionToShow.style.display = "block";
+        }
+      }
+    </script>
+    <!-- reidirigir a inicio de sesion------------->
+
+    <script>
+      function logout() {
+        // Borrar el indicador isLoggedIn del almacenamiento local
+        localStorage.removeItem("isLoggedIn");
+        // Redirigir al usuario a la página de inicio de sesión después de cerrar sesión
+        window.location.href = "index.html";
+      }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- MENÚ------------->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+    <script>
+      // JavaScript para mostrar u ocultar el menú lateral al hacer clic en el botón de menú
+      document
+        .getElementById("menu-toggle")
+        .addEventListener("click", function () {
+          var sidebar = document.getElementById("sidebar");
+          sidebar.classList.toggle("active"); // Alternar la clase 'active' para mostrar u ocultar el menú
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function guardarMantenimiento() {
+        // Aquí puedes agregar el código para guardar los datos del mantenimiento en tu base de datos
+        // Por ejemplo, puedes obtener los valores de los campos del formulario
+        var nombre = document.getElementById("nombre").value;
+        var descripcion = document.getElementById("descripcion").value;
+
+        // Luego, puedes realizar una solicitud AJAX para guardar los datos en el servidor
+        // Aquí tienes un ejemplo básico de cómo hacerlo con fetch():
+        fetch("/guardar_mantenimiento", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nombre: nombre,
+            descripcion: descripcion,
+            // Agrega más campos según sea necesario
+          }),
+        })
+          .then((response) => {
+            if (response.ok) {
+              // Si la solicitud se completa correctamente, puedes realizar alguna acción, como cerrar el modal
+              var modal = new bootstrap.Modal(
+                document.getElementById("crearMantenimientoModal")
+              );
+              modal.hide();
+              // También puedes recargar la página o realizar alguna otra acción
+            } else {
+              // Si hay un error al guardar los datos, puedes mostrar un mensaje de error al usuario
+              alert(
+                "Error al guardar el mantenimiento. Por favor, intenta de nuevo."
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Error al realizar la solicitud:", error);
+          });
+      }
+    </script>
+  </body>
+</html>

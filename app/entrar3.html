@@ -1,0 +1,727 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Umedica</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fjalla+One|Noto+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <style>
+
+      /* Estilos para la sección de ambulancias */
+     
+      /*animacion de ambulancias*/
+      .card {
+        width: 18rem;
+        margin: 10px;
+        overflow: hidden; /* Para evitar que la animación de aumento afecte al contenido circundante */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .card img {
+        height: 200px;
+        object-fit: cover;
+        /* Agrega un margen alrededor de la imagen */
+        margin: 10px auto 0; /* margen: arriba auto abajo */
+      }
+
+      /* Estilo de botón */
+      .card button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Estilo de botón al hacer hover */
+      .card button:hover {
+        background-color: #0056b3;
+      }
+
+      /* Animación de aumento al hacer hover */
+      .card:hover {
+        transform: scale(1.05);
+      }
+      /*---------------------------------------------------------*/
+      /* Estilos específicos para pantallas pequeñas */
+      @media screen and (max-width: 768px) {
+        .sidebar {
+          width: 200px; /* Ajusta el ancho del menú lateral */
+        }
+        .menu-toggle {
+          display: block; /* Muestra el botón de menú en pantallas pequeñas */
+        }
+        .navbar {
+          padding: 10px; /* Agrega espacio alrededor de la barra de navegación */
+        }
+        /* Agrega más estilos específicos para pantallas pequeñas si es necesario */
+      }
+
+      body {
+        background-image: url("https://cdn.glitch.global/dd67a867-ee25-4bee-981a-7488c739ae8d/26800.jpg?v=1709855152709");
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin: 0;
+        height: 100vh; /* 100% de la altura de la ventana */
+        width: 100vw; /* 100% del ancho de la ventana */
+      }
+      .container-fluid {
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -5px;
+        margin-left: -5px;
+      }
+      .col {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+        padding-right: 5px; /* Espaciado entre las columnas */
+        padding-left: 5px; /* Espaciado entre las columnas */
+      }
+      /* botones de menu*/
+      .sidebar {
+        padding: 10px;
+        position: fixed;
+        top: 53px;
+        left: 0;
+        height: 100%;
+        width: 250px;
+        background-color: #007bff; /* Fondo semitransparente cambiar color acordatesssssssssss*/
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+        z-index: 1000; /* Asegura que esté sobre el contenido principal */
+        transform: translateX(-250px); /* Ocultar inicialmente */
+        transition: transform 0.3s ease;
+      }
+      .sidebar h7 {
+        font-size: 16px; /* Tamaño de fuente del título */
+        margin-bottom: 10px; /* Espacio entre el título y la lista */
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+        /* Mostrar cuando está activo */
+      }
+      .sidebar ul {
+        list-style-type: none; /* Eliminar los puntos de la lista */
+        padding: 0;
+        margin: 0;
+      }
+
+      .sidebar ul li {
+        margin-bottom: 5px; /* Espacio entre elementos de la lista */
+      }
+
+      .sidebar ul li a {
+        display: block;
+        padding: 5px;
+        text-decoration: none;
+        color: white;
+        background-color: #007bff; /* Color de fondo */
+        border-radius: 10px; /* Bordes redondeados */
+        transition: background-color 0.3s, transform 0.3s; /* Agrega una transición suave */
+      }
+
+      .sidebar ul li a:hover {
+        background-color: #0056b3; /* Cambia el color de fondo al pasar el cursor */
+        transform: scale(1.05); /* Agranda ligeramente el botón */
+      }
+      /*------------------------------------------------------------------------*/
+      .menu-toggle {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        cursor: pointer;
+        z-index: 1100; /* Asegura que esté sobre el menú lateral */
+      }
+      li a {
+        color: white;
+        transition: color 0.3s; /* Agrega una transición suave para el cambio de color */
+      }
+
+      li a:hover {
+        color: lightgray; /* Cambia el color al pasar el cursor */
+      }
+
+      /* Estilos para el contenedor de la descripción */
+      #ambulance-description-1,
+      #ambulance-description-2,
+      #ambulance-description-3,
+      #ambulance-description-4,
+      #ambulance-description-5,
+      #ambulance-description-6,
+      #ambulance-description-7,
+      #ambulance-description-8,
+      #ambulance-description-9 {
+        display: none;
+        position: fixed;
+
+        left: 50%;
+        transform: translate(-50%, -50%); /* Desplazar hacia abajo 50px */
+        background-color: #f8f9fa;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        width: 1140px; /* Ancho del contenedor */
+        height: 600px; /* Alto del contenedor */
+        text-align: center;
+        margin-left: 125px; /* Desplazar hacia la derecha 120px */
+        margin-top: 50px;
+      }
+
+      #ambulance-description h2 {
+        margin-bottom: 10px;
+        font-size: 20px;
+      }
+
+      #ambulance-description p {
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body style="overflow-y: auto">
+    <!-- BARRA DE NAVEGACION -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="navbar-nav me-auto">
+            <span class="nav-link"
+              >Bienvenido, {{
+              request.user.first_name|default:request.user.username }}</span
+            >
+            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+
+            <a id="ambulanceLink" class="nav-link" href="#">Ambulancias</a>
+
+            <a id="menuLink" class="nav-link" href="#">menu</a>
+          </div>
+          <!-- Sección para mostrar el nombre de usuario -->
+          <div class="navbar-nav">
+            <!-- Agrega un botón para cerrar sesión -->
+            <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+          </div>
+
+          <!-- Botón para cambiar la contraseña -->
+          <button
+            class="nav-link navbar-nav"
+            data-bs-toggle="modal"
+            data-bs-target="#crearMantenimientoModal"
+          >
+            Cambiar contraseña
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!--MENU Y BARRA DE NAVEGACIOPN---->
+
+    <!---script tabla columna--------------------------------->
+    <script>
+      function showAmbulanceDescription(ambulance) {
+        var allDescriptions = document.querySelectorAll(
+          ".ambulance-description"
+        );
+        allDescriptions.forEach(function (description) {
+          description.style.display = "none";
+        });
+
+        var descriptionToShow = document.getElementById(
+          "ambulance-description-" + ambulance
+        );
+        if (descriptionToShow) {
+          descriptionToShow.style.display = "block";
+        }
+      }
+    </script>
+    <!-- reidirigir a inicio de sesion------------->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- MENÚ------------->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+    <script>
+      // JavaScript para mostrar u ocultar el menú lateral al hacer clic en el botón de menú
+      document
+        .getElementById("menu-toggle")
+        .addEventListener("click", function () {
+          var sidebar = document.getElementById("sidebar");
+          sidebar.classList.toggle("active"); // Alternar la clase 'active' para mostrar u ocultar el menú
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+    <!-- Estilo CSS para las tarjetas -->
+    <style>
+      .card {
+        width: 18rem;
+        margin: 30px;
+        border-radius: 15px;
+      }
+
+      .card img {
+        height: 200px;
+        object-fit: cover;
+        margin: 2px 0px 0px 0px;
+        border-radius: 15px;
+      }
+    </style>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="crearMantenimientoModal"
+      tabindex="-1"
+      aria-labelledby="crearMantenimientoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="crearMantenimientoModalLabel">
+              Crear Nuevo Mantenimiento
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Aquí está el formulario de cambio de contraseña -->
+            <form method="post">
+              {% load widget_tweaks %} {% for field in form %}
+              <div class="mb-3">
+                {{ field.label_tag }} {% render_field field
+                class+="form-control" %}
+              </div>
+              {% endfor %}
+              <input type="submit" class="btn btn-primary" value="Cambiar" />
+              {% csrf_token %}
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--ambulancias--------->
+    <section class="last-blogs" id="ambulanceCards">
+  <div class="last-blogs__wrapper section__wrapper">
+    <h2 class="featured-blog-card__title">AMBULANCIAS</h2>
+    <ul class="last-blogs__list">
+    {% for articulo in articulos %}
+      <li class="last-blogs__item">
+        <article>
+          <a href="/blog/contenido/{{articulo.id}}" class="most-read-blog__img-cont">
+            <img
+              class="most-read-blog__img"
+              src="{{articulo.imagen.url}}"
+              alt="most read blog img"
+              width="180"
+              height="100"
+            />
+          </a>
+          <div class="most-read-blog__content">
+            <a href="/blog/contenido/{{articulo.id}}">
+              <h3 class="most-read-blog__title">
+                {{articulo.titulo}}
+              </h3>
+            </a>
+
+            <ul class="blog-card-stats is-vertical gap-0">
+              <li class="blog-card-stats__item">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                  width="1.25em"
+                  height="1.25em"
+                  class="s-mr-1 s-mr-05 fill"
+                  fill="CurrentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M16 27C22.0751 27 27 22.0751 27 16C27 9.92487 22.0751 5 16 5C9.92487 5 5 9.92487 5 16C5 22.0751 9.92487 27 16 27ZM16 30C23.732 30 30 23.732 30 16C30 8.26801 23.732 2 16 2C8.26801 2 2 8.26801 2 16C2 23.732 8.26801 30 16 30Z"
+                  ></path>
+                  <path
+                    d="M15.5 9C16.3284 9 17 9.67157 17 10.5V17.5C17 18.3284 16.3284 19 15.5 19C14.6716 19 14 18.3284 14 17.5V10.5C14 9.67157 14.6716 9 15.5 9Z"
+                  ></path>
+                  <path
+                    d="M14 17.5C14 16.6716 14.6716 16 15.5 16H20.5C21.3284 16 22 16.6716 22 17.5C22 18.3284 21.3284 19 20.5 19H15.5C14.6716 19 14 18.3284 14 17.5Z"
+                  ></path>
+                </svg>
+                <p>Lectura de {{articulo.duracion}} Kilometraje </p>
+              </li>
+              <li class="blog-card-stats__item"  >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                  width="1.25em"
+                  height="1.25em"
+                  class="s-mr-1 s-mr-05 fill"
+                  fill="CurrentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M27 8H5L5 27H27V8ZM5 5C3.34315 5 2 6.34315 2 8V27C2 28.6569 3.34315 30 5 30H27C28.6569 30 30 28.6569 30 27V8C30 6.34315 28.6569 5 27 5H5Z"
+                  ></path>
+                  <path
+                    d="M8.5 2C9.32843 2 10 2.67157 10 3.5L10 9.5C10 10.3284 9.32843 11 8.5 11C7.67157 11 7 10.3284 7 9.5L7 3.5C7 2.67157 7.67157 2 8.5 2Z"
+                  ></path>
+                  <path
+                    d="M30 14.5C30 15.3284 29.3284 16 28.5 16L3.5 16C2.67157 16 2 15.3284 2 14.5C2 13.6716 2.67157 13 3.5 13L28.5 13C29.3284 13 30 13.6716 30 14.5Z"
+                  ></path>
+                  <path
+                    d="M23.5 2C24.3284 2 25 2.67157 25 3.5V9.5C25 10.3284 24.3284 11 23.5 11C22.6716 11 22 10.3284 22 9.5V3.5C22 2.67157 22.6716 2 23.5 2Z"
+                  ></path>
+                </svg>
+                <p>{{articulo.fecha_registro}}</p>
+              </li>
+            </ul>
+            <div class="blog-author">
+              <img
+                src="https://edteam-media.s3.amazonaws.com/blogs/original/316f4593-d55e-4f67-a15c-f9d91c233ad7.jpg"
+                alt="author profile photo"
+                class="blog-author__img"
+                width="24"
+                height="24"
+              />
+              <p class="blog-author__name">{{articulo.autor}}</p>
+            </div>
+          </div>
+        </article>
+      </li>
+      <li class="last-blogs__item">
+        <article>
+          <a href="/blog/contenido/{{articulo.id}}" class="most-read-blog__img-cont">
+            <img
+              class="most-read-blog__img"
+              src="{{articulo.imagen.url}}"
+              alt="most read blog img"
+              width="180"
+              height="100"
+            />
+          </a>
+          <div class="most-read-blog__content">
+            <a href="/blog/contenido/{{articulo.id}}">
+              <h3 class="most-read-blog__title">
+                {{articulo.titulo}}
+              </h3>
+            </a>
+
+            <ul class="blog-card-stats is-vertical gap-0">
+              <li class="blog-card-stats__item">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                  width="1.25em"
+                  height="1.25em"
+                  class="s-mr-1 s-mr-05 fill"
+                  fill="CurrentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M16 27C22.0751 27 27 22.0751 27 16C27 9.92487 22.0751 5 16 5C9.92487 5 5 9.92487 5 16C5 22.0751 9.92487 27 16 27ZM16 30C23.732 30 30 23.732 30 16C30 8.26801 23.732 2 16 2C8.26801 2 2 8.26801 2 16C2 23.732 8.26801 30 16 30Z"
+                  ></path>
+                  <path
+                    d="M15.5 9C16.3284 9 17 9.67157 17 10.5V17.5C17 18.3284 16.3284 19 15.5 19C14.6716 19 14 18.3284 14 17.5V10.5C14 9.67157 14.6716 9 15.5 9Z"
+                  ></path>
+                  <path
+                    d="M14 17.5C14 16.6716 14.6716 16 15.5 16H20.5C21.3284 16 22 16.6716 22 17.5C22 18.3284 21.3284 19 20.5 19H15.5C14.6716 19 14 18.3284 14 17.5Z"
+                  ></path>
+                </svg>
+                <p>Lectura de {{articulo.duracion}} Kilometraje </p>
+              </li>
+              <li class="blog-card-stats__item">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                  width="1.25em"
+                  height="1.25em"
+                  class="s-mr-1 s-mr-05 fill"
+                  fill="CurrentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M27 8H5L5 27H27V8ZM5 5C3.34315 5 2 6.34315 2 8V27C2 28.6569 3.34315 30 5 30H27C28.6569 30 30 28.6569 30 27V8C30 6.34315 28.6569 5 27 5H5Z"
+                  ></path>
+                  <path
+                    d="M8.5 2C9.32843 2 10 2.67157 10 3.5L10 9.5C10 10.3284 9.32843 11 8.5 11C7.67157 11 7 10.3284 7 9.5L7 3.5C7 2.67157 7.67157 2 8.5 2Z"
+                  ></path>
+                  <path
+                    d="M30 14.5C30 15.3284 29.3284 16 28.5 16L3.5 16C2.67157 16 2 15.3284 2 14.5C2 13.6716 2.67157 13 3.5 13L28.5 13C29.3284 13 30 13.6716 30 14.5Z"
+                  ></path>
+                  <path
+                    d="M23.5 2C24.3284 2 25 2.67157 25 3.5V9.5C25 10.3284 24.3284 11 23.5 11C22.6716 11 22 10.3284 22 9.5V3.5C22 2.67157 22.6716 2 23.5 2Z"
+                  ></path>
+                </svg>
+                <p>{{articulo.fecha_registro}}</p>
+              </li>
+            </ul>
+            <div class="blog-author">
+              <img
+                src="https://edteam-media.s3.amazonaws.com/blogs/original/316f4593-d55e-4f67-a15c-f9d91c233ad7.jpg"
+                alt="author profile photo"
+                class="blog-author__img"
+                width="24"
+                height="24"
+              />
+              <p class="blog-author__name">{{articulo.autor}}</p>
+            </div>
+          </div>
+        </article>
+      </li>
+    {% endfor %}
+    
+    </ul>
+  </div>
+</section>
+<!--OCULTAR AMBULANCIAS---------->
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Función para mostrar las ambulancias
+        function showAmbulances() {
+          document.getElementById("ambulanceCards").style.display = "flex";
+        }
+
+        //Función para ocultar las ambulancias
+        function hideAmbulances() {
+          document.getElementById("ambulanceCards").style.display = "none";
+        }
+
+        <!-- Ocultar las ambulancias al cargar la página--------->
+        hideAmbulances();
+
+        // Mostrar las ambulancias cuando se hace clic en el enlace "Ambulancias"
+        document
+          .getElementById("ambulanceLink")
+          .addEventListener("click", function () {
+            showAmbulances();
+          });
+
+        // Ocultar las ambulancias cuando se hace clic en "Inicio" o "Otro enlace"
+        var homeLink = document.querySelector('a[href="#"]');
+        var otherLink = document.querySelector('a[href="#"]');
+        if (homeLink && otherLink) {
+          homeLink.addEventListener("click", function () {
+            hideAmbulances();
+          });
+          otherLink.addEventListener("click", function () {
+            hideAmbulances();
+          });
+        }
+
+        // Ocultar las ambulancias cuando se hace clic en el enlace de menú
+        document
+          .getElementById("menuLink")
+          .addEventListener("click", function () {
+            hideAmbulances();
+          });
+
+       
+        // Función para crear las tarjetas de las ambulancias
+        function createAmbulanceCards(ambulanceData) {
+          var ambulanceCardsContainer =
+            document.getElementById("ambulanceCards");
+          ambulanceCardsContainer.innerHTML = "";
+
+          ambulanceData.forEach(function (ambulance, index) {
+            var cardHtml = `
+          <div class="card">
+            <img src="${ambulance.image}" class="card-img-top" alt="${
+              ambulance.name
+            }">
+            <div class="card-body">
+              <h5 class="card-title">${ambulance.name}</h5>
+              <p class="card-text">${ambulance.description}</p>
+              <p>Movil ${index + 1}</p>
+              <p>SOAT vence el: ${ambulance.soatExpiration}</p>
+            </div>
+          </div>
+        `;
+            ambulanceCardsContainer.insertAdjacentHTML("beforeend", cardHtml);
+          });
+        }
+
+        createAmbulanceCards(ambulanceData);
+      });
+    </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Función para verificar la fecha de registro y mostrar una alerta si faltan 5 días o menos
+    function checkRegistrationDate() {
+      var today = new Date(); // Obtener la fecha actual
+      var items = document.querySelectorAll(".blog-card-stats__item"); // Obtener todos los elementos con la clase blog-card-stats__item
+
+      items.forEach(function (item) {
+        var registrationDate = new Date(item.querySelector("p").textContent); // Obtener la fecha de registro del texto dentro del elemento p dentro del item
+        var daysUntilRegistration = Math.floor((registrationDate - today) / (1000 * 60 * 60 * 24)); // Calcular los días restantes hasta la fecha de registro
+
+        if (daysUntilRegistration === 5) {
+          // Si faltan 5 días exactamente para la fecha de registro
+          alert("Faltan 5 días para la fecha de registro. Por favor, asegúrate de pagar el SOAT a tiempo.");
+        }
+      });
+    }
+
+    // Llamar a la función cuando se carga la página
+    checkRegistrationDate();
+  });
+</script>
+
+
+  </body>
+</html>
+
+
+
+
+    <!--<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("ambulanceLink").addEventListener("click", function () {
+            // Aquí puedes hacer una solicitud AJAX para obtener los datos de las ambulancias
+            // Por simplicidad, aquí se crea un array con datos de ejemplo
+            var ambulanceData = [
+                {% for articulo in articulos %}
+                {
+                    name: "{{ articulo.nombre }}",
+                    image: "{{ articulo.imagen }}",
+                    description: "{{ articulo.descripcion }}",
+                },
+                {% endfor %}
+            ];
+
+            var ambulanceCardsContainer = document.getElementById("ambulanceCards");
+            ambulanceCardsContainer.innerHTML = "";
+
+            ambulanceData.forEach(function (ambulance) {
+                var cardHtml = `
+                    <a href="#" class="card">
+                        <img src="${ambulance.image}" class="card-img-top" alt="${ambulance.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${ambulance.name}</h5>
+                            <p class="card-text no-underline">${ambulance.description}</p>
+                            
+                        </div>
+                    </a>
+                `;
+
+                ambulanceCardsContainer.insertAdjacentHTML("beforeend", cardHtml);
+            });
+        });
+    });
+
+
+
+CSS
+
+.last-blogs__wrapper {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+  border-radius: 10px;
+  margin-top: 50px;
+}
+
+.featured-blog-card__title {
+  font-size: 24px;
+  color: #333; /* Color del texto */
+  margin-bottom: 20px;
+}
+
+.last-blogs__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Distribución de los elementos */
+}
+
+.last-blogs__item {
+  width: calc(50% - 20px); /* Ancho de cada elemento (mitad de la fila) */
+  margin-bottom: 20px;
+}
+
+/* Estilo para el título de cada artículo */
+.most-read-blog__title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Estilo para la información adicional del artículo */
+.blog-card-stats {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.blog-card-stats__item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #666; /* Color del texto de la información adicional */
+}
+
+.blog-card-stats__item svg {
+  margin-right: 5px;
+}
+
+/* Estilo para el autor del artículo */
+.blog-author {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.blog-author__img {
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.blog-author__name {
+  font-size: 14px;
+  color: #333; /* Color del nombre del autor */
+}
+</script>----->

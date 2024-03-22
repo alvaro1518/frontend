@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      // Función para manejar el evento beforeunload
+      function handleBeforeUnload(event) {
+        // Borrar el indicador isLoggedIn del almacenamiento local
+        localStorage.removeItem("isLoggedIn");
+      }
+
+      // Agregar el listener para el evento beforeunload
+      window.addEventListener("beforeunload", handleBeforeUnload);
+    </script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario de Mantenimiento</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fjalla+One|Noto+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Estilos adicionales -->
+    <style>
+
+      /* Estilos específicos para pantallas pequeñas */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 200px; /* Ajusta el ancho del menú lateral */
+            }
+            .menu-toggle {
+                display: block; /* Muestra el botón de menú en pantallas pequeñas */
+            }
+            .navbar {
+                padding: 10px; /* Agrega espacio alrededor de la barra de navegación */
+            }
+            /* Agrega más estilos específicos para pantallas pequeñas si es necesario */
+        }
+      body {
+        
+        font-family: "Noto Sans", sans-serif;
+      }
+      .container {
+        max-width: 600px;
+      }
+      .btn-generar-pdf {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+ <!-- <script>
+      // Verificar si el usuario ha iniciado sesión
+      var isLoggedIn = localStorage.getItem("isLoggedIn");
+      if (!isLoggedIn) {
+        // Si no ha iniciado sesión, redirigir a usuario.html
+        window.location.href = "usuario.html";
+      }
+    </script>----->
+    <nav
+      class="navbar bg-success text-dark bg-opacity-25"
+      data-bs-theme="light"
+    >
+      <div class="container mt-5">
+        <h2 class="text-center">Formulario de Mantenimiento</h2>
+        <form id="formulario-mantenimiento" action="#" method="post">
+          <div class="mb-3">
+            <label for="kilometraje" class="form-label">Kilometraje:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="kilometraje"
+              name="kilometraje"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha:</label>
+            <input type="date" class="form-control" id="fecha" required />
+          </div>
+          <div class="mb-3">
+            <label for="mantenimiento" class="form-label"
+              >Mantenimiento Realizado:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="mantenimiento"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="repuestos" class="form-label">Repuestos:</label>
+            <input type="text" class="form-control" id="repuestos" required />
+          </div>
+          <div class="mb-3">
+            <label for="lugar-reparacion" class="form-label"
+              >Lugar de Reparación:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="lugar-reparacion"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="costo" class="form-label">Costo:</label>
+            <input type="text" class="form-control" id="costo" required />
+          </div>
+          <div class="mb-3">
+            <label for="numero-factura" class="form-label"
+              >Número de Factura:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="numero-factura"
+              required
+            />
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary btn-generar-pdf"
+            onclick="window.location.href='index.html'"
+          >
+            Generar PDF
+          </button>
+        </form>
+      </div>
+      <!-- Biblioteca jsPDF -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+      <script>
+        function generarPDF() {
+          var kilometraje = document.getElementById("kilometraje").value;
+          var fecha = document.getElementById("fecha").value;
+          var mantenimiento = document.getElementById("mantenimiento").value;
+          var repuestos = document.getElementById("repuestos").value;
+          var lugarReparacion =
+            document.getElementById("lugar-reparacion").value;
+          var costo = document.getElementById("costo").value;
+          var numeroFactura = document.getElementById("numero-factura").value;
+          var doc = new jsPDF();
+          doc.text("Detalles de Mantenimiento", 10, 10);
+          doc.text("Kilometraje: " + kilometraje, 10, 20);
+          doc.text("Fecha: " + fecha, 10, 30);
+          doc.text("Mantenimiento Realizado: " + mantenimiento, 10, 40);
+          doc.text("Repuestos: " + repuestos, 10, 50);
+          doc.text("Lugar de Reparación: " + lugarReparacion, 10, 60);
+          doc.text("Costo: " + costo, 10, 70);
+          doc.text("Número de Factura: " + numeroFactura, 10, 80);
+          doc.save("formulario_mantenimiento.pdf");
+        }
+      </script>
+    </nav>
+  </body>
+</html>

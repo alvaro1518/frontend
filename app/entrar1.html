@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Logged out{% endblock %}
+{% block content %}
+<div class="column is-three-quarters">
+  
+  <h1>Logged out</h1>
+  <p>
+    Se ha cerrado la sesión con éxito.
+    puede <a href="{% url 'login' %}">iniciar seccion de nuevo </a>.
+  </p>
+</div>
+{% endblock %}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Sitio Web</title>
+</head>
+<body>
+    <header>
+        <!-- Encabezado común -->
+        <h1>Mi Sitio Web</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/juego">Juego</a></li>
+                <li><a href="/concer">Conciertos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Contenido específico de cada subpágina -->
+        <!-- Página de inicio -->
+        <section id="index">
+            <h2>Bienvenido a la página de inicio</h2>
+            <p>Este es el contenido de la página de inicio.</p>
+        </section>
+
+        <!-- Página de juego -->
+        <section id="juego">
+            <h2>Juego</h2>
+            <p>Este es el contenido de la página de juego.</p>
+            <p><a href="/juego/tiposdejuegos">Ver tipos de juegos</a></p>
+        </section>
+
+        <!-- Página de tipos de juegos -->
+        <section id="tiposdejuegos" style="display: none;">
+            <h2>Tipos de Juegos</h2>
+            <p>Aquí se muestran los diferentes tipos de juegos disponibles:</p>
+            <ul>
+                <li>Juego 1</li>
+                <li>Juego 2</li>
+                <li>Juego 3</li>
+            </ul>
+        </section>
+
+        <!-- Página de conciertos -->
+        <section id="concer" style="display: none;">
+            <h2>Conciertos</h2>
+            <p>Este es el contenido de la página de conciertos.</p>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Pie de página común -->
+        <p>Derechos de autor &copy; 2024 Mi Sitio Web</p>
+    </footer>
+
+    <script>
+        // Mostrar u ocultar la sección según el hash en la URL
+        document.addEventListener("DOMContentLoaded", function() {
+            var hash = window.location.hash.substr(1);
+            if (hash) {
+                var section = document.getElementById(hash);
+                if (section) {
+                    section.style.display = "block";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
